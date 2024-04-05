@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 11:03:10 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:46:35 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_imap
 }	t_imap;
 
 int		*index_arr(int *arr, int size);
+int		check_dups(int *arr, int size);
 t_list	*init_stack_a(int *arr, int size);
 
 // quicksort functions

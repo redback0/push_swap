@@ -19,19 +19,19 @@ PS_LIB_OBJ = $(PS_LIB_SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(PS_LIB) $(LIBFT) $(OBJ)
-	@echo "CREATING push_swap"
+	@echo "<$(NAME)>CREATING push_swap"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PS_LIB) $(LIBFT)
 
 %.o: %.c
-	@echo "COMPILING $@"
+	@echo "<$(NAME)>COMPILING $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(PS_LIB): $(LIBFT) $(PS_LIB_OBJ)
-	@echo "CREATING push_swap.a"
+	@echo "<$(NAME)>CREATING push_swap.a"
 	@ar rcs $(PS_LIB) $(PS_LIB_OBJ)
 
 $(LIBFT): $(LIBFT_HEADER)
-	@echo "GETTING LIBFT"
+	@echo "<$(NAME)>GETTING LIBFT"
 	@make -C libft
 	@cp libft/$(LIBFT) .
 
@@ -39,12 +39,12 @@ $(LIBFT_HEADER):
 	@cp libft/$(LIBFT_HEADER) .
 
 clean:
-	@echo "REMOVING ALL OBJ"
+	@echo "<$(NAME)>REMOVING ALL OBJ"
 	@make fclean -C libft
 	@rm -f $(OBJ) $(PS_LIB_OBJ)
 
 fclean: clean
-	@echo "REMOVING LIBS/EXEC"
+	@echo "<$(NAME)>REMOVING LIBS/EXEC"
 	@rm -f $(NAME) $(PS_LIB) $(LIBFT) $(LIBFT_HEADER)
 
 re: fclean all

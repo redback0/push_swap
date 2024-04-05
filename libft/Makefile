@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
 SRC = ft_atoi.c \
+	  ft_atoi_strict.c \
 	  ft_bzero.c \
 	  ft_calloc.c \
 	  ft_isalnum.c \
@@ -59,19 +60,19 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "CREATING ARCHIVE"
+	@echo "<$(NAME)>CREATING ARCHIVE"
 	@ar rcs $(NAME) $(OBJ)
 
 %.o: %.c
-	@echo "COMPILING $@"
+	@echo "<$(NAME)>COMPILING $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "REMOVING OBJECT FILES"
+	@echo "<$(NAME)>REMOVING OBJECT FILES"
 	@rm -f $(OBJ)
 
 fclean: clean
-	@echo "REMOVING ARCHIVE"
+	@echo "<$(NAME)>REMOVING ARCHIVE"
 	@rm -f $(NAME)
 
 re: fclean all
