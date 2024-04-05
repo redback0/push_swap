@@ -52,7 +52,7 @@ SRC = ft_atoi.c \
 	  get_next_line.c \
 	  get_next_line_utils.c \
 	  ft_printf_fd.c \
-	  ft_swap.c \
+	  ft_memswap.c \
 
 OBJ = $(SRC:.c=.o)
 

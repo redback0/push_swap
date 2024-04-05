@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   push_swap_solver.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 14:28:33 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/03 14:29:28 by njackson         ###   ########.fr       */
+/*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
+/*   Updated: 2024/04/05 11:03:10 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PUSH_SWAP_SOLVER_H
+# define PUSH_SWAP_SOLVER_H
 
-void	ft_swap(int *a, int *b)
+# include "push_swap.h"
+# include "libft.h"
+
+typedef struct s_imap
 {
-	int	t;
-	t = *a;
-	*a = *b;
-	*b = t;
-}
+	int	v;
+	int	oi;
+}	t_imap;
+
+int		*index_arr(int *arr, int size);
+t_list	*init_stack_a(int *arr, int size);
+
+// quicksort functions
+int		partion(t_imap *arr, int start, int end);
+t_imap	*quicksort(t_imap *arr, int start, int end);
+
+#endif

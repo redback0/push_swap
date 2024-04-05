@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:30:22 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/03 15:05:31 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:11:38 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 void	*ft_memmove(void *dst, const void *src, size_t len);
-
-void	ft_swap(int *a, int *b);
+void	ft_memswap(void *a, void *b, size_t n);
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -64,7 +63,7 @@ int		ft_putendl_fd(char *s, int fd);
 int		ft_putnbr_base_fd(long long n, char *base, int fd);
 int		ft_putunbr_base_fd(unsigned long long n, char *base, int fd);
 int		ft_putnbr_fd(long long n, int fd);
-int		ft_putptr_fd(void * n, int fd);
+int		ft_putptr_fd(void *n, int fd);
 
 typedef struct s_list
 {
@@ -88,7 +87,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 # define HEX_UPPER "0123456789ABCDEF"
 # define HEX_LOWER "0123456789abcdef"
 
-int	ft_printf_fd(int fd, const char *format, ...);
+int		ft_printf_fd(int fd, const char *format, ...);
 
 // GET NEXT LINE THINGS
 # ifndef BUFFER_SIZE
