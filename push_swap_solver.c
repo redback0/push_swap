@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 12:19:27 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:26:35 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char *argv[])
 		ft_printf_fd(1, "Error\n");
 		return (1); // I don't know what to put for errors yet
 	}
-	arr = index_arr(arr, argc - 1);
+	arr = index_arr(arr, argc - 1); // after this, turn the array into a stack, and pass into the actual solver
 
 	i = 0;
 	while (i < argc - 1)
@@ -64,8 +64,8 @@ int	*index_arr(int *arr, int size)
 
 int	check_dups(int *arr, int size)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (i < size)
