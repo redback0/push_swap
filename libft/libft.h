@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:30:22 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 12:25:56 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:12:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_isspace(int c);
+
+int		ft_abs(int n);
 
 size_t	ft_strlen(const char *s);
 void	*ft_memset(void *b, int c, size_t len);
