@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 11:46:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:51:23 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ typedef struct s_imap
 	int	v;
 	int	oi;
 }	t_imap;
+
+typedef struct s_stack
+{
+	int	fi;
+	int	dist;
+	int	new_dist;
+}	t_stack;
 
 int		*index_arr(int *arr, int size);
 int		check_dups(int *arr, int size);
