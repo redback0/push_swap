@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 14:26:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:01:19 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 int	main(int argc, char *argv[])
 {
-	int	*arr;
-	int	err;
-	int	i;
+	int		*arr;
+	t_list	stack_a;
+	t_list	instr;
+	int		err;
+	int		i;
 
 	arr = (int *)malloc((argc - 1) * sizeof(int));
 	err = 0;
 	i = -1;
 	while (++i < argc - 1 && !err)
-	{
 		arr[i] = ft_atoi_strict(argv[i + 1], &err);
-	}
 	if (err || check_dups(arr, argc - 1))
 	{
 		free(arr);
 		ft_printf_fd(1, "Error\n");
-		return (1); // I don't know what to put for errors yet
+		return (1);
 	}
-	arr = index_arr(arr, argc - 1); // after this, turn the array into a stack, and pass into the actual solver
-
-	i = 0;
-	while (i < argc - 1)
-		ft_printf_fd(1, "%d\n", arr[i++]);
+	arr = index_arr(arr, argc - 1);
+	stack_a = arr_to_stack(arr);
+	instr = distance_sort(stack_a);
+	// optional: run an efficiency function on the instructions
+	output_instr(instr);
+	return (0);
 }
 
 int	*index_arr(int *arr, int size)
@@ -80,3 +81,5 @@ int	check_dups(int *arr, int size)
 	}
 	return (0);
 }
+
+
