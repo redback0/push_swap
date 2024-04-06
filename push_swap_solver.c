@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 17:01:19 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:05:30 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(int argc, char *argv[])
 {
 	int		*arr;
-	t_list	stack_a;
-	t_list	instr;
+	t_list	*stack_a;
+	t_list	*instr;
 	int		err;
 	int		i;
 
@@ -32,7 +32,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	arr = index_arr(arr, argc - 1);
-	stack_a = arr_to_stack(arr);
+	stack_a = init_stack_a(arr, argc - 1);
 	instr = distance_sort(stack_a);
 	// optional: run an efficiency function on the instructions
 	output_instr(instr);

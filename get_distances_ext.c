@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:18:38 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 16:43:23 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:06:15 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	sa_change(t_list *s)
 {
 	int		total;
-	t_stack	top;
-	t_stack	sec;
+	t_stack	*top;
+	t_stack	*sec;
 
 	if (ft_lstsize(s) < 2)
 		return (-2048);
@@ -39,8 +39,8 @@ int	sa_change(t_list *s)
 int	sb_change(t_list *s)
 {
 	int		total;
-	t_stack	top;
-	t_stack	sec;
+	t_stack	*top;
+	t_stack	*sec;
 
 	if (ft_lstsize(s) < 2)
 		return (-2048);
