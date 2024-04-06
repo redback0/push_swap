@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:56:44 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 13:20:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:42:41 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,88 @@ void	get_distances(t_list **s_a, t_list **s_b)
 	}
 }
 
-
-// TESTING ********************************************************************
-t_stack	*create_stack_ele(int fi)
+int	ra_change(t_list *s)
 {
-	t_stack	*out;
+	t_stack	*cont;
+	int		total;
 
-	out = (t_stack *)malloc(sizeof(*out));
-	out->fi = fi;
-	out->dist = 0;
-	return (out);
+	total = 0;
+	while (s->next)
+	{
+		cont = s->content;
+		if (cont->dist > 0)
+			total++;
+		else
+			total--;
+		s = s->next;
+	}
+	cont = s->content;
+	total += ft_abs(cont->dist) - cont->fi;
+	return (total);
 }
 
-void	print_t_stack(t_stack s)
+int	rra_change(t_list *s)
 {
-	ft_printf_fd(1, "fi:%d dist:%d new:%d\n", s.fi, s.dist);
+	t_stack	*cont;
+	int		total;
+	int		new_dist;
+
+	cont = s->content;
+	new_dist = cont->fi - (ft_lstsize(s) - 1);
+	total = cont->dist - ft_abs(new_dist);
+	s = s->next;
+	while (s)
+	{
+		cont = s->content;
+		if (cont->dist < 0)
+			total++;
+		else
+			total--;
+		s = s->next;
+	}
+	return (total);
 }
 
-int	main(void)
+int	rb_change(t_list *s)
 {
-	t_list	*s_a;
-	t_list	*s_b;
+	t_stack	*cont;
+	int		total;
+	int		new_dist;
 
-	ft_printf_fd(1, "CREATING LIST OF STACKS\n");
-	s_a = ft_lstnew(create_stack_ele(2));
-	s_a->next = ft_lstnew(create_stack_ele(0));
-	s_b = ft_lstnew(create_stack_ele(1));
-	ft_printf_fd(1, "GETTING DISTANCES\n");
-	get_distances(&s_a, &s_b);
-	ft_printf_fd(1, "PRINTING STACKS\n");
-	print_t_stack(*(t_stack *)s_a->content);
-	print_t_stack(*(t_stack *)s_a->next->content);
-	print_t_stack(*(t_stack *)s_b->content);
+	total = 0;
+	while (s->next)
+	{
+		cont = s->content;
+		if (cont->dist < 0)
+			total++;
+		else
+			total--;
+		s = s->next;
+	}
+	cont = s->content;
+	new_dist = cont->dist - (ft_lstsize(s) - 1);
+	total += ft_abs(cont->dist) - ft_abs(new_dist);
+	return (total);
+}
+
+int	rrb_change(t_list *s)
+{
+	t_stack	*cont;
+	int		total;
+	int		new_dist;
+
+	cont = s->content;
+	new_dist = cont->dist + (ft_lstsize(s) - 1);
+	total = ft_abs(cont->dist) - ft_abs(new_dist);
+	s = s->next;
+	while (s)
+	{
+		cont = s->content;
+		if (cont->dist > 0)
+			total++;
+		else
+			total--;
+		s = s->next;
+	}
+	return (total);
 }
