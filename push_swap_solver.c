@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 14:05:32 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:35:39 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,19 @@ int	main(int argc, char *argv[])
 	int		err;
 	int		i;
 
+	arr = 0;
+	if (argc < 2)
+		return (ps_solver_error(arr));
 	arr = (int *)malloc((argc - 1) * sizeof(int));
 	err = 0;
 	i = -1;
 	while (++i < argc - 1 && !err)
 		arr[i] = ft_atoi_strict(argv[i + 1], &err);
 	if (err || check_dups(arr, argc - 1))
-	{
-		free(arr);
-		ft_printf_fd(1, "Error\n");
-		return (1);
-	}
+		return (ps_solver_error(arr));
 	arr = index_arr(arr, argc - 1);
 	stack_a = init_stack_a(arr, argc - 1);
 	instr = distance_sort(stack_a);
-	// optional: run an efficiency function on the instructions
 	output_instr(instr);
 	return (0);
 }
@@ -87,26 +85,32 @@ t_list	*init_stack_a(int *arr, int size)
 	t_list	*stack;
 	t_list	*end;
 	t_stack	*cont;
+	int		i;
 
-	cont = (t_stack *)malloc(sizeof(*cont));
-	cont->fi = arr[--size];
-	cont->dist = 0;
-	stack = ft_lstnew(cont);
-	end = stack->next;
-	while (--size >= 0)
+	i = 0;
+	stack = 0;
+	while (i < size)
 	{
 		cont = (t_stack *)malloc(sizeof(*cont));
-		cont->fi = arr[size];
+		cont->fi = arr[i];
 		cont->dist = 0;
-		end = ft_lstnew(cont);
-		end = end->next;
+		if (!stack)
+		{
+			stack = ft_lstnew(cont);
+			end = stack;
+		}
+		else
+		{
+			end->next = ft_lstnew(cont);
+			end = end->next;
+		}
+		i++;
 	}
 	return (stack);
 }
 
 void	output_instr(t_list *instr)
 {
-
 	while (instr)
 	{
 		ft_printf_fd(1, "%s\n", instr->content);

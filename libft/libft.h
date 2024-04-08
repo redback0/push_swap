@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:30:22 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 17:17:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:12:24 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		ft_putnbr_fd(long long n, int fd);
 int		ft_putptr_fd(void *n, int fd);
 
 int		ft_arrmin(int *arr, int size);
+int		ft_arrmax(int *arr, int size);
 
 typedef struct s_list
 {

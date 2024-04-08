@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:56:44 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 15:42:41 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 22:25:17 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	rb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
+	if (!s)
+		return (-1);
 	total = 0;
 	while (s->next)
 	{
@@ -110,6 +112,8 @@ int	rrb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
+	if (!s)
+		return (-1);
 	cont = s->content;
 	new_dist = cont->dist + (ft_lstsize(s) - 1);
 	total = ft_abs(cont->dist) - ft_abs(new_dist);

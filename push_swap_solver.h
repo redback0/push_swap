@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 15:33:05 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:52:38 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		*index_arr(int *arr, int size);
 int		check_dups(int *arr, int size);
 t_list	*init_stack_a(int *arr, int size);
 void	output_instr(t_list *instr);
+int		ps_solver_error(int *arr);
 
 t_list	*distance_sort(t_list *s_a);
 

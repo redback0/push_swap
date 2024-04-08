@@ -1,6 +1,6 @@
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 PS_LIB = push_swap.a
 
@@ -8,6 +8,7 @@ LIBFT = libft.a
 LIBFT_HEADER = libft.h
 
 SRC = push_swap_solver.c \
+	  push_swap_solver_ext.c \
 	  quicksort.c \
 	  distance_sort.c \
 	  get_distances.c \

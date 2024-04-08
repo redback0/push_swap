@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:18:38 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 16:25:46 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:33:58 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	check_solved(t_list *s_a, t_list *s_b)
 	if (s_b)
 		return (0);
 	if (stack_entropy(s_a))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void	get_changes(t_list *s_a, t_list *s_b, int *changes)
