@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 17:05:46 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:33:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,13 @@ int		ra_change(t_list *s);
 int		rb_change(t_list *s);
 int		rra_change(t_list *s);
 int		rrb_change(t_list *s);
+
 int		sa_change(t_list *s);
 int		sb_change(t_list *s);
+int		stack_entropy(t_list *s);
+
+int		check_solved(t_list *s_a, t_list *s_b);
+void	get_changes(t_list *s_a, t_list *s_b, int *changes);
 
 // quicksort functions
 int		partion(t_imap *arr, int start, int end);

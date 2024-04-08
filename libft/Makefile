@@ -55,6 +55,7 @@ SRC = ft_atoi.c \
 	  ft_printf_fd.c \
 	  ft_memswap.c \
 	  ft_abs.c \
+	  ft_arrmin.c \
 
 OBJ = $(SRC:.c=.o)
 

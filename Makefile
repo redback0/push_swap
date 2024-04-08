@@ -9,6 +9,7 @@ LIBFT_HEADER = libft.h
 
 SRC = push_swap_solver.c \
 	  quicksort.c \
+	  distance_sort.c \
 	  get_distances.c \
 	  get_distances_ext.c \
 

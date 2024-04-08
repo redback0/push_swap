@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/06 17:05:30 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:05:32 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,34 @@ int	check_dups(int *arr, int size)
 	return (0);
 }
 
+t_list	*init_stack_a(int *arr, int size)
+{
+	t_list	*stack;
+	t_list	*end;
+	t_stack	*cont;
 
+	cont = (t_stack *)malloc(sizeof(*cont));
+	cont->fi = arr[--size];
+	cont->dist = 0;
+	stack = ft_lstnew(cont);
+	end = stack->next;
+	while (--size >= 0)
+	{
+		cont = (t_stack *)malloc(sizeof(*cont));
+		cont->fi = arr[size];
+		cont->dist = 0;
+		end = ft_lstnew(cont);
+		end = end->next;
+	}
+	return (stack);
+}
+
+void	output_instr(t_list *instr)
+{
+
+	while (instr)
+	{
+		ft_printf_fd(1, "%s\n", instr->content);
+		instr = instr->next;
+	}
+}
