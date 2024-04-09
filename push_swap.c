@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:07:17 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/05 11:09:23 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:49:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	do_instr(char *instr, t_list **s_a, t_list **s_b)
 		rev_rotate_ab(s_a, s_b);
 }
 
-void	rotate_stack(t_list **stack)
+void	rev_rotate_stack(t_list **stack)
 {
 	t_list	*head;
 	t_list	*end;
@@ -50,7 +50,7 @@ void	rotate_stack(t_list **stack)
 	end->next = NULL;
 }
 
-void	rev_rotate_stack(t_list **stack)
+void	rotate_stack(t_list **stack)
 {
 	t_list	*head;
 	t_list	*end;
@@ -90,10 +90,27 @@ void	push_stack(t_list **to, t_list **from)
 
 void	swap_stack(t_list **stack)
 {
-	t_list	*tmp;
+	t_list	*third;
+	t_list	*second;
+	t_list	*last;
 
-	tmp = (*stack)->next;
-	(*stack)->next = tmp->next;
-	tmp->next = *stack;
-	*stack = tmp;
+	if (ft_lstsize(*stack) < 3)
+	{
+		second = *stack;
+		last = second->next;
+		*stack = last;
+		last->next = second;
+		second->next = 0;
+	}
+	else
+	{
+		third = *stack;
+		while (third->next->next->next)
+			third = third->next;
+		second = third->next;
+		last = second->next;
+		third->next = last;
+		last->next = second;
+		second->next = 0;
+	}
 }
