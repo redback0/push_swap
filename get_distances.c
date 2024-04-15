@@ -88,46 +88,43 @@ int	rra_change(t_list *s)
 
 int	rb_change(t_list *s)
 {
-	t_stack	*cont;
+	t_stack	*rcont;
+	t_stack *cont;
 	int		total;
-	int		new_dist;
 
 	if (!s || ft_lstsize(s) < 3)
 		return (-1);
+	rcont = ft_lstlast(s)->content;
 	total = 0;
-	while (s->next)
+	while (s->next->next)
 	{
 		cont = s->content;
-		if (cont->dist < 0)
+		if (cont->fi < rcont->fi)
 			total++;
-		else if (ft_lstsize(s) != 2)
+		else
 			total--;
 		s = s->next;
 	}
-	cont = s->content;
-	new_dist = cont->dist - (ft_lstsize(s) - 1);
-	total += (ft_abs(cont->dist) - ft_abs(new_dist));
 	return (total);
 }
 
 int	rrb_change(t_list *s)
 {
+	t_stack	*rcont;
 	t_stack	*cont;
 	int		total;
-	int		new_dist;
 
 	if (!s || ft_lstsize(s) < 3)
 		return (-1);
-	cont = s->content;
-	new_dist = cont->dist + (ft_lstsize(s) - 1);
-	total = (ft_abs(cont->dist) - ft_abs(new_dist));
+	rcont = s->content;
 	s = s->next;
-	while (s)
+	total = 0;
+	while (s->next)
 	{
 		cont = s->content;
-		if (cont->dist > 0)
+		if (cont->fi > rcont->fi)
 			total++;
-		else if (ft_lstsize(s) != 1)
+		else
 			total--;
 		s = s->next;
 	}

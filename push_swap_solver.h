@@ -36,6 +36,8 @@ int		ps_solver_error(int *arr);
 
 t_list	*distance_sort(t_list *s_a);
 
+int		stack_in_order(t_list *s);
+
 // distance functions
 void	get_distances(t_list **s_a, t_list **s_b);
 

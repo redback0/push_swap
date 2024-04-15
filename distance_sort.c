@@ -34,38 +34,15 @@ static char	**get_instr_arr(void)
 static int	get_instr(int *changes, t_list *s)
 {
 	int out;
-	/*
-	if (changes[0] > 0 && changes[1] > 0)
-		return (2);
-	if (changes[0] > 0)
-		return (0);
-	if (changes[1] > 0)
-		return (1);
-	if (changes[3] > 0 && changes[4] > 0)
-		return (5);
-	if (changes[6] > 0 && changes[7] > 0)
-		return (8);
-	if (changes[3] > 0 && changes[3] > changes[7])
-		return (3);
-	if (changes[4] > 0 && changes[4] > changes[6])
-		return (4);
-	if (changes[6] > 0)
-		return (6);
-	if (changes[7] > 0)
-		return (7);
-	if (stack_entropy(s))
-		return (9);
-	return (10);
-	*/
 	out = ft_arrmax(changes, 9);
 	if (changes[out] > 0)
 		return (out);
-	if (stack_entropy(s))
+	if (!stack_in_order(s))
 		return (9);
 	return (10);
 }
 
-void	print_stacks(t_list *s_a, t_list *s_b)
+void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 {
 	t_stack	*c_a;
 	t_stack	*c_b;
@@ -122,10 +99,10 @@ t_list	*distance_sort(t_list *s_a)
 	get_distances(&s_a, &s_b);
 	while (!check_solved(s_a, s_b))
 	{
-		print_stacks(s_a, s_b);
 		get_changes(s_a, s_b, changes);
 		instr_i = get_instr(changes, s_a);
-		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
+		print_stacks(s_a, s_b); // DEBUG
+		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]); // DEBUG
 		do_instr(instrs[instr_i], &s_a, &s_b);
 		if (!instr_lst)
 			instr_lst = ft_lstnew(instrs[instr_i]);
@@ -136,4 +113,20 @@ t_list	*distance_sort(t_list *s_a)
 	free(instrs);
 	ft_printf_fd(2, "MOVES USED: %d\n", ft_lstsize(instr_lst));
 	return (instr_lst);
+}
+
+int	stack_in_order(t_list *s)
+{
+	t_stack	*a;
+	t_stack	*b;
+
+	while (s && s->next)
+	{
+		a = s->content;
+		b = s->next->content;
+		if (a->fi > b->fi)
+			return (0);
+		s = s->next;
+	}
+	return (1);
 }
