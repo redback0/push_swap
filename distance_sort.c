@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/15 13:07:05 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 22:25:59 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,26 @@ static char	**get_instr_arr(void)
 	return (out);
 }
 
-static int	get_instr(int *changes, t_list *s)
+static int	get_instr(int *changes, t_list *s, int last)
 {
 	int out;
+
+	if (last == 3 || last == 4)
+		changes[last + 3] = -1;
+	else if (last == 6 || last == 7)
+		changes[last - 3] = -1;
+	else if (last == 5)
+	{
+		changes[6] = -1;
+		changes[7] = -1;
+		changes[8] = -1;
+	}
+	else if (last == 8)
+	{
+		changes[3] = -1;
+		changes[4] = -1;
+		changes[5] = -1;
+	}
 	out = ft_arrmax(changes, 9);
 	if (changes[out] > 0)
 		return (out);
@@ -42,6 +59,7 @@ static int	get_instr(int *changes, t_list *s)
 	return (10);
 }
 
+/*
 void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 {
 	t_stack	*c_a;
@@ -84,6 +102,7 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 			ft_printf_fd(2, "\n");
 	}
 }
+*/
 
 t_list	*distance_sort(t_list *s_a)
 {
@@ -95,14 +114,15 @@ t_list	*distance_sort(t_list *s_a)
 
 	s_b = 0;
 	instr_lst = 0;
+	instr_i = -1;
 	instrs = get_instr_arr();
 	get_distances(&s_a, &s_b);
 	while (!check_solved(s_a, s_b))
 	{
 		get_changes(s_a, s_b, changes);
-		instr_i = get_instr(changes, s_a);
-		print_stacks(s_a, s_b); // DEBUG
-		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]); // DEBUG
+		instr_i = get_instr(changes, s_a, instr_i);
+//		print_stacks(s_a, s_b); // DEBUG
+//		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]); // DEBUG
 		do_instr(instrs[instr_i], &s_a, &s_b);
 		if (!instr_lst)
 			instr_lst = ft_lstnew(instrs[instr_i]);
