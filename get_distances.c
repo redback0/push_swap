@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:56:44 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 22:25:17 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:54:28 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ra_change(t_list *s)
 	t_stack	*cont;
 	int		total;
 
-	if (!s || ft_lstsize(s) < 2)
+	if (!s || ft_lstsize(s) < 3)
 		return (-1);
 	total = 0;
 	while (s->next)
@@ -68,7 +68,7 @@ int	rra_change(t_list *s)
 	int		total;
 	int		new_dist;
 
-	if (!s || ft_lstsize(s) < 2)
+	if (!s || ft_lstsize(s) < 3)
 		return (-1);
 	cont = s->content;
 	new_dist = cont->fi - (ft_lstsize(s) - 1);
@@ -92,7 +92,7 @@ int	rb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
-	if (!s || ft_lstsize(s) < 2)
+	if (!s || ft_lstsize(s) < 3)
 		return (-1);
 	total = 0;
 	while (s->next)
@@ -116,7 +116,7 @@ int	rrb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
-	if (!s || ft_lstsize(s) < 2)
+	if (!s || ft_lstsize(s) < 3)
 		return (-1);
 	cont = s->content;
 	new_dist = cont->dist + (ft_lstsize(s) - 1);

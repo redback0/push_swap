@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/15 10:49:45 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:07:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void	print_stacks(t_list *s_a, t_list *s_b)
 		{
 			c_a = s_a->content;
 			tmp = ft_log_base_n(c_a->fi, 10);
+			if (tmp == 0)
+				tmp = 1;
 			while (tmp++ <= mlt)
-				ft_putchar_fd(2, ' ');
+				ft_printf_fd(2, " ");
 			ft_printf_fd(2, "%d | ", c_a->fi);
 			s_a = s_a->next;
 		}
@@ -89,7 +91,7 @@ void	print_stacks(t_list *s_a, t_list *s_b)
 		{
 			tmp = 0;
 			while (tmp++ <= mlt)
-				ft_putchar_fd(2, ' ');
+				ft_printf_fd(2, " ");
 			ft_printf_fd(2, " | ");
 		}
 		if (s_b)
@@ -97,7 +99,7 @@ void	print_stacks(t_list *s_a, t_list *s_b)
 			c_b = s_b->content;
 			tmp = ft_log_base_n(c_b->fi, 10);
 			while (tmp++ < mlt)
-				ft_putchar_fd(2, ' ');
+				ft_printf_fd(2, " ");
 			ft_printf_fd(2, "%d\n", c_b->fi);
 			s_b = s_b->next;
 		}
