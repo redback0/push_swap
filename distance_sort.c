@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/09 15:22:02 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:49:45 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static char	**get_instr_arr(void)
 
 static int	get_instr(int *changes, t_list *s)
 {
+	int out;
+	/*
 	if (changes[0] > 0 && changes[1] > 0)
 		return (2);
 	if (changes[0] > 0)
@@ -54,6 +56,54 @@ static int	get_instr(int *changes, t_list *s)
 	if (stack_entropy(s))
 		return (9);
 	return (10);
+	*/
+	out = ft_arrmax(changes, 9);
+	if (changes[out] > 0)
+		return (out);
+	if (stack_entropy(s))
+		return (9);
+	return (10);
+}
+
+void	print_stacks(t_list *s_a, t_list *s_b)
+{
+	t_stack	*c_a;
+	t_stack	*c_b;
+	int		mlt;
+	int		tmp;
+
+	ft_printf_fd(2, "-- STACKS --\n");
+	mlt = ft_log_base_n(ft_lstsize(s_a) + ft_lstsize(s_b), 10);
+	while (s_a || s_b)
+	{
+		if (s_a)
+		{
+			c_a = s_a->content;
+			tmp = ft_log_base_n(c_a->fi, 10);
+			while (tmp++ <= mlt)
+				ft_putchar_fd(2, ' ');
+			ft_printf_fd(2, "%d | ", c_a->fi);
+			s_a = s_a->next;
+		}
+		else
+		{
+			tmp = 0;
+			while (tmp++ <= mlt)
+				ft_putchar_fd(2, ' ');
+			ft_printf_fd(2, " | ");
+		}
+		if (s_b)
+		{
+			c_b = s_b->content;
+			tmp = ft_log_base_n(c_b->fi, 10);
+			while (tmp++ < mlt)
+				ft_putchar_fd(2, ' ');
+			ft_printf_fd(2, "%d\n", c_b->fi);
+			s_b = s_b->next;
+		}
+		else
+			ft_printf_fd(2, "\n");
+	}
 }
 
 t_list	*distance_sort(t_list *s_a)
@@ -70,8 +120,10 @@ t_list	*distance_sort(t_list *s_a)
 	get_distances(&s_a, &s_b);
 	while (!check_solved(s_a, s_b))
 	{
+		print_stacks(s_a, s_b);
 		get_changes(s_a, s_b, changes);
 		instr_i = get_instr(changes, s_a);
+		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
 		do_instr(instrs[instr_i], &s_a, &s_b);
 		if (!instr_lst)
 			instr_lst = ft_lstnew(instrs[instr_i]);
@@ -80,5 +132,6 @@ t_list	*distance_sort(t_list *s_a)
 		get_distances(&s_a, &s_b);
 	}
 	free(instrs);
+	ft_printf_fd(2, "MOVES USED: %d\n", ft_lstsize(instr_lst));
 	return (instr_lst);
 }

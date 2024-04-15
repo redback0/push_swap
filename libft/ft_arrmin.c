@@ -18,7 +18,7 @@ int	ft_arrmin(int *arr, int size)
 
 	out = --size;
 	while (size-- > 0)
-		if (arr[out] > arr[size])
+		if (arr[out] >= arr[size])
 			out = size;
 	return (out);
 }

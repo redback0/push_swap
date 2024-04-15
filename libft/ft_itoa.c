@@ -12,19 +12,6 @@
 
 #include "libft.h"
 
-static int	log_base_n(int n, int base)
-{
-	int	i;
-
-	i = 0;
-	while (n)
-	{
-		n /= base;
-		i++;
-	}
-	return (i);
-}
-
 char	*ft_itoa(int n)
 {
 	char	*out;
@@ -32,7 +19,7 @@ char	*ft_itoa(int n)
 
 	if (n == 0)
 		return (ft_strdup("0"));
-	i = log_base_n(n, 10);
+	i = ft_log_base_n(n, 10);
 	if (n < 0)
 		out = (char *)ft_calloc((i + 2), sizeof(char));
 	else

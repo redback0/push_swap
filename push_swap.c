@@ -43,6 +43,8 @@ void	rev_rotate_stack(t_list **stack)
 	t_list	*head;
 	t_list	*end;
 
+	if (ft_lstsize(*stack) < 2)
+		return ;
 	end = *stack;
 	*stack = (*stack)->next;
 	head = ft_lstlast(*stack);
@@ -55,6 +57,8 @@ void	rotate_stack(t_list **stack)
 	t_list	*head;
 	t_list	*end;
 
+	if (ft_lstsize(*stack) < 2)
+		return ;
 	end = *stack;
 	while (end->next->next)
 		end = end->next;

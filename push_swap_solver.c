@@ -43,18 +43,17 @@ int	*index_arr(int *arr, int size)
 	int		i;
 
 	imap = (t_imap *)malloc(size * sizeof(*imap));
-	i = 0;
-	while (i < size)
+	i = size;
+	while (i--)
 	{
 		imap[i].v = arr[i];
 		imap[i].oi = i;
-		i++;
 	}
 	imap = quicksort(imap, 0, size - 1);
 	i = 0;
-	while (i < size)
+	while (size--)
 	{
-		arr[imap[i].oi] = i;
+		arr[imap[i].oi] = size;
 		i++;
 	}
 	free (imap);
@@ -85,14 +84,12 @@ t_list	*init_stack_a(int *arr, int size)
 	t_list	*stack;
 	t_list	*end;
 	t_stack	*cont;
-	int		i;
 
-	i = 0;
 	stack = 0;
-	while (i < size)
+	while (size--)
 	{
 		cont = (t_stack *)malloc(sizeof(*cont));
-		cont->fi = arr[i];
+		cont->fi = arr[size];
 		cont->dist = 0;
 		if (!stack)
 		{
@@ -104,7 +101,6 @@ t_list	*init_stack_a(int *arr, int size)
 			end->next = ft_lstnew(cont);
 			end = end->next;
 		}
-		i++;
 	}
 	return (stack);
 }

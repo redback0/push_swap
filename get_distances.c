@@ -45,18 +45,20 @@ int	ra_change(t_list *s)
 	t_stack	*cont;
 	int		total;
 
+	if (!s || ft_lstsize(s) < 2)
+		return (-1);
 	total = 0;
 	while (s->next)
 	{
 		cont = s->content;
 		if (cont->dist > 0)
 			total++;
-		else
+		else if (ft_lstsize(s) != 2)
 			total--;
 		s = s->next;
 	}
 	cont = s->content;
-	total += ft_abs(cont->dist) - cont->fi;
+	total += (ft_abs(cont->dist) - cont->fi);
 	return (total);
 }
 
@@ -66,16 +68,18 @@ int	rra_change(t_list *s)
 	int		total;
 	int		new_dist;
 
+	if (!s || ft_lstsize(s) < 2)
+		return (-1);
 	cont = s->content;
 	new_dist = cont->fi - (ft_lstsize(s) - 1);
-	total = cont->dist - ft_abs(new_dist);
+	total = (cont->dist - ft_abs(new_dist));
 	s = s->next;
 	while (s)
 	{
 		cont = s->content;
 		if (cont->dist < 0)
 			total++;
-		else
+		else if (ft_lstsize(s) != 1)
 			total--;
 		s = s->next;
 	}
@@ -88,7 +92,7 @@ int	rb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
-	if (!s)
+	if (!s || ft_lstsize(s) < 2)
 		return (-1);
 	total = 0;
 	while (s->next)
@@ -96,13 +100,13 @@ int	rb_change(t_list *s)
 		cont = s->content;
 		if (cont->dist < 0)
 			total++;
-		else
+		else if (ft_lstsize(s) != 2)
 			total--;
 		s = s->next;
 	}
 	cont = s->content;
 	new_dist = cont->dist - (ft_lstsize(s) - 1);
-	total += ft_abs(cont->dist) - ft_abs(new_dist);
+	total += (ft_abs(cont->dist) - ft_abs(new_dist));
 	return (total);
 }
 
@@ -112,18 +116,18 @@ int	rrb_change(t_list *s)
 	int		total;
 	int		new_dist;
 
-	if (!s)
+	if (!s || ft_lstsize(s) < 2)
 		return (-1);
 	cont = s->content;
 	new_dist = cont->dist + (ft_lstsize(s) - 1);
-	total = ft_abs(cont->dist) - ft_abs(new_dist);
+	total = (ft_abs(cont->dist) - ft_abs(new_dist));
 	s = s->next;
 	while (s)
 	{
 		cont = s->content;
 		if (cont->dist > 0)
 			total++;
-		else
+		else if (ft_lstsize(s) != 1)
 			total--;
 		s = s->next;
 	}

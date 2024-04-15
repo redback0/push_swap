@@ -26,6 +26,7 @@ int		ft_isprint(int c);
 int		ft_isspace(int c);
 
 int		ft_abs(int n);
+int		ft_log_base_n(int n, int base);
 
 size_t	ft_strlen(const char *s);
 void	*ft_memset(void *b, int c, size_t len);

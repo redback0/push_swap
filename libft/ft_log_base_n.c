@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrmax.c                                        :+:      :+:    :+:   */
+/*   ft_log_base_n.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 21:10:25 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 21:11:49 by njackson         ###   ########.fr       */
+/*   Created: 2024/04/15 12:00:40 by njackson          #+#    #+#             */
+/*   Updated: 2024/04/15 12:00:43 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_arrmax(int *arr, int size)
+int	ft_log_base_n(int n, int base)
 {
-	int	out;
+	int	i;
 
-	out = --size;
-	while (size-- > 0)
-		if (arr[out] <= arr[size])
-			out = size;
-	return (out);
+	i = 0;
+	while (n)
+	{
+		n /= base;
+		i++;
+	}
+	return (i);
 }

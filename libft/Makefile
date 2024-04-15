@@ -20,7 +20,7 @@ SRC = ft_atoi.c			ft_atoi_strict.c	ft_bzero.c \
 	  ft_lstlast.c		ft_lstmap.c			ft_lstnew.c \
 	  ft_lstsize.c		get_next_line.c		get_next_line_utils.c \
 	  ft_printf_fd.c	ft_memswap.c		ft_abs.c \
-	  ft_arrmin.c		ft_arrmax.c \
+	  ft_arrmin.c		ft_arrmax.c			ft_log_base_n.c \
 
 OBJ = $(SRC:.c=.o)
 

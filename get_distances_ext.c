@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:18:38 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 21:33:58 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:52:22 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	sa_change(t_list *s)
 	t_stack	*sec;
 
 	if (ft_lstsize(s) < 2)
-		return (-2048);
+		return (-1);
 	while (s->next->next)
 		s = s->next;
 	top = s->next->content;
@@ -43,7 +43,7 @@ int	sb_change(t_list *s)
 	t_stack	*sec;
 
 	if (ft_lstsize(s) < 2)
-		return (-2048);
+		return (-1);
 	while (s->next->next)
 		s = s->next;
 	top = s->next->content;
@@ -95,4 +95,17 @@ void	get_changes(t_list *s_a, t_list *s_b, int *changes)
 	changes[6] = rra_change(s_a);
 	changes[7] = rrb_change(s_b);
 	changes[8] = changes[6] + changes[7];
+	/*
+	ft_printf_fd(2, "--CHANGES--\n");
+	ft_printf_fd(2, "sa: %d\n", changes[0]);
+	ft_printf_fd(2, "sb: %d\n", changes[1]);
+	ft_printf_fd(2, "ss: %d\n", changes[2]);
+	ft_printf_fd(2, "ra: %d\n", changes[3]);
+	ft_printf_fd(2, "rb: %d\n", changes[4]);
+	ft_printf_fd(2, "rr: %d\n", changes[5]);
+	ft_printf_fd(2, "rra: %d\n", changes[6]);
+	ft_printf_fd(2, "rrb: %d\n", changes[7]);
+	ft_printf_fd(2, "rrr: %d\n", changes[8]);
+	ft_printf_fd(2, "--END--\n");
+	*/
 }
