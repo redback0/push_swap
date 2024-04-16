@@ -33,7 +33,7 @@ static char	**get_instr_arr(void)
 
 static int	get_instr(int *changes, t_list *s, int last)
 {
-	int out;
+	int	out;
 
 	if (last == 3 || last == 4)
 		changes[last + 3] = -1;
@@ -59,7 +59,7 @@ static int	get_instr(int *changes, t_list *s, int last)
 	return (10);
 }
 
-/*
+
 void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 {
 	t_stack	*c_a;
@@ -102,7 +102,7 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 			ft_printf_fd(2, "\n");
 	}
 }
-*/
+
 
 t_list	*distance_sort(t_list *s_a)
 {
@@ -131,7 +131,6 @@ t_list	*distance_sort(t_list *s_a)
 		get_distances(&s_a, &s_b);
 	}
 	free(instrs);
-//	ft_printf_fd(2, "MOVES USED: %d\n", ft_lstsize(instr_lst)); // DEBUG
 	return (instr_lst);
 }
 

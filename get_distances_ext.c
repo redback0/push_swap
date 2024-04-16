@@ -26,13 +26,13 @@ int	sa_change(t_list *s)
 	sec = s->content;
 	total = 0;
 	if (top->dist < 0)
-		total++;
+		total = 1;
 	else
-		total--;
+		total = -1;
 	if (sec->dist > 0)
-		total++;
+		total += 1;
 	else
-		total--;
+		total -= 1;
 	if (total == 0 && top->fi < sec->fi)
 		total = 65536;
 	return (total);
@@ -50,15 +50,14 @@ int	sb_change(t_list *s)
 		s = s->next;
 	top = s->next->content;
 	sec = s->content;
-	total = 0;
 	if (top->dist > 0)
-		total++;
+		total = 1;
 	else
-		total--;
+		total = -1;
 	if (sec->dist < 0)
-		total++;
+		total += 1;
 	else
-		total--;
+		total -= 1;
 	if (total == 0 && top->fi > sec->fi)
 		total = 65536;
 	return (total);
@@ -101,12 +100,12 @@ void	get_changes(t_list *s_a, t_list *s_b, int *changes)
 	changes[8] = changes[6] + changes[7];
 	/*
 	ft_printf_fd(2, "--CHANGES--\n");
-	ft_printf_fd(2, "sa: %d\n", changes[0]);
-	ft_printf_fd(2, "sb: %d\n", changes[1]);
-	ft_printf_fd(2, "ss: %d\n", changes[2]);
-	ft_printf_fd(2, "ra: %d\n", changes[3]);
-	ft_printf_fd(2, "rb: %d\n", changes[4]);
-	ft_printf_fd(2, "rr: %d\n", changes[5]);
+	ft_printf_fd(2, " sa: %d\n", changes[0]);
+	ft_printf_fd(2, " sb: %d\n", changes[1]);
+	ft_printf_fd(2, " ss: %d\n", changes[2]);
+	ft_printf_fd(2, " ra: %d\n", changes[3]);
+	ft_printf_fd(2, " rb: %d\n", changes[4]);
+	ft_printf_fd(2, " rr: %d\n", changes[5]);
 	ft_printf_fd(2, "rra: %d\n", changes[6]);
 	ft_printf_fd(2, "rrb: %d\n", changes[7]);
 	ft_printf_fd(2, "rrr: %d\n", changes[8]);

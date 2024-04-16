@@ -89,7 +89,7 @@ int	rra_change(t_list *s)
 int	rb_change(t_list *s)
 {
 	t_stack	*rcont;
-	t_stack *cont;
+	t_stack	*cont;
 	int		total;
 
 	if (!s || ft_lstsize(s) < 3)
