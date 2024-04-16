@@ -13,13 +13,16 @@ size=$1
 runs=1
 pstack=0
 pinstr=0
+seeds=
 shift 1
 
-while getopts "sir:" flag; do
+while getopts "dir:s:" flag; do
 	case $flag in
-		s) pstack=1 ;;
+		d) pstack=1 ;;
 		i) pinstr=1 ;;
 		r) runs="${OPTARG}" ;;
+		s) seeds[0]="${OPTARG}" ;;
+		*) usage && exit 0 ;;
 	esac
 done
 
@@ -28,17 +31,19 @@ if [ -z $size ]; then
 	exit 1
 fi
 
-seeds=($(awk -v loop=$runs -v range=$((65536)) 'BEGIN{
-	srand()
-	do {
-		numb = 1 + int(rand() * range)
-		if (!(numb in prev)) {
-		print numb
-		prev[numb] = 1
-		count++
-		}
-	} while (count<loop)
-	}'))
+if (( ${#seeds[@]} )); then
+	seeds=($(awk -v loop=$runs -v range=$((2147483647)) 'BEGIN{
+		srand()
+		do {
+			numb = 1 + int(rand() * range)
+			if (!(numb in prev)) {
+			print numb
+			prev[numb] = 1
+			count++
+			}
+		} while (count<loop)
+		}'))
+fi
 
 for (( i = 0 ; i < $runs ; i++ )); do
 	stack=$(awk -v loop=$size -v range=$(($size * 20)) -v take=$(($size * 10)) -v seed=${seeds[$i]} 'BEGIN{
@@ -61,6 +66,7 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	fi
 
 	printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
+	printf "SEED: ${seeds[$i]}\n"
 
 	instrs=$(./push_swap ${stack[@]})
 
