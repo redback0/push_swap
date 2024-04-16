@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:18:38 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/15 22:25:36 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 22:50:17 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	sa_change(t_list *s)
 	else
 		total--;
 	if (total == 0 && top->fi < sec->fi)
-		total = 1;
+		total = 65536;
 	return (total);
 }
 
@@ -59,6 +59,8 @@ int	sb_change(t_list *s)
 		total++;
 	else
 		total--;
+	if (total == 0 && top->fi > sec->fi)
+		total = 65536;
 	return (total);
 }
 

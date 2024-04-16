@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/15 22:25:59 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/15 22:39:38 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ t_list	*distance_sort(t_list *s_a)
 		get_distances(&s_a, &s_b);
 	}
 	free(instrs);
-	ft_printf_fd(2, "MOVES USED: %d\n", ft_lstsize(instr_lst));
+//	ft_printf_fd(2, "MOVES USED: %d\n", ft_lstsize(instr_lst)); // DEBUG
 	return (instr_lst);
 }
 
