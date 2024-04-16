@@ -2,6 +2,7 @@
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 NC='\033[0m'
 
 usage() {
@@ -59,6 +60,8 @@ for (( i = 0 ; i < $runs ; i++ )); do
 		echo "--END--" >> stack.txt
 	fi
 
+	printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
+
 	instrs=$(./push_swap ${stack[@]})
 
 	#write instructions to instrs.txt if -i specified
@@ -67,7 +70,6 @@ for (( i = 0 ; i < $runs ; i++ )); do
 		echo "$instrs" >> instrs.txt
 		echo "--END--" >> instrs.txt
 	fi
-	echo "RUN $i"
 	if [[ "$instrs" == "" ]]; then
 		echo "SOLVED LIST"
 	else
@@ -98,6 +100,6 @@ for wc in ${wcs[@]}; do
 		max=$wc
 	fi
 done
-
+printf "\n${YELLOW}----FINAL RESULTS----${NC}\n"
 echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
 echo "MAX INSTRUCTIONS: $max"

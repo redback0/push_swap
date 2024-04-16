@@ -6,14 +6,11 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/15 22:39:38 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:52:22 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_solver.h"
-
-
-#include <libc.h>
 
 static char	**get_instr_arr(void)
 {
@@ -34,7 +31,7 @@ static char	**get_instr_arr(void)
 	return (out);
 }
 
-static int	get_instr(int *changes, t_list *s, int last)
+int	get_instr(int *changes, t_list *s, int last)
 {
 	int	out;
 
@@ -107,7 +104,7 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 }
 
 
-static void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
+void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 {
 	int	changes[9];
 	int	instr_i;
@@ -127,7 +124,7 @@ static void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **
 	}
 }
 
-static int	return_instr(t_list *s_a, t_list *s_b)
+int	return_instr(t_list *s_a, t_list *s_b)
 {
 	t_stack *last_a;
 	t_stack	*last_b;
@@ -139,21 +136,17 @@ static int	return_instr(t_list *s_a, t_list *s_b)
 	last_b = ft_lstlast(s_b)->content;
 	change = sb_change(s_b);
 	if (change > 0 && last_a->dist < 0)
-		return (2); // ss
+		return (2);
 	if (last_a->dist < 0)
-		return (0); // sa
+		return (0);
 	if ((last_b->fi < last_a->fi && last_b->dist < 0) || last_a->dist == 0)
 		return (10);
 	if (rotate_direction(s_b))
 		return (7);
 	return (4);
-	//CHECK rb
-	//CHECK rrb
-	//CHECK pa
-	//DEFAULT either rb or rrb: should be able to pick
 }
 
-static void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
+void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 {
 	int	instr_i;
 
@@ -185,6 +178,7 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
+	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);
