@@ -34,9 +34,11 @@ t_list	*init_stack_a(int *arr, int size);
 void	output_instr(t_list *instr);
 int		ps_solver_error(int *arr);
 
+// distance sort funcs
 t_list	*distance_sort(t_list *s_a);
 
 int		stack_in_order(t_list *s);
+int	rotate_direction(t_list *s_b);
 
 // distance functions
 void	get_distances(t_list **s_a, t_list **s_b);

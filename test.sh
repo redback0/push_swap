@@ -67,27 +67,27 @@ for (( i = 0 ; i < $runs ; i++ )); do
 		echo "$instrs" >> instrs.txt
 		echo "--END--" >> instrs.txt
 	fi
+	echo "RUN $i"
 	if [[ "$instrs" == "" ]]; then
 		echo "SOLVED LIST"
-		exit 0
 	else
 		echo -n "TOTAL INSTRUCTIONS: "
 		wcs[$i]=$(echo "$instrs" | wc -l | tr -d ' ')
 		echo ${wcs[$i]}
-	fi
 
-	echo -n "RESULT: "
-	if [[ "$OSTYPE" == "darwin"* ]]; then
-		result=$(echo "$instrs" | ./checker_Mac ${stack[@]})
-	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-		result=$(echo "$instrs" | ./checker_linux ${stack[@]})
-	fi
+		echo -n "RESULT: "
+		if [[ "$OSTYPE" == "darwin"* ]]; then
+			result=$(echo "$instrs" | ./checker_Mac ${stack[@]})
+		elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+			result=$(echo "$instrs" | ./checker_linux ${stack[@]})
+		fi
 
-	if [[ "$result" == "OK" ]]; then
-		printf "${GREEN}${result}${NC}\n"
-	else
-		printf "${RED}${result}${NC}\n"
-		exit 1
+		if [[ "$result" == "OK" ]]; then
+			printf "${GREEN}${result}${NC}\n"
+		else
+			printf "${RED}${result}${NC}\n"
+			exit 1
+		fi
 	fi
 done
 
@@ -100,4 +100,4 @@ for wc in ${wcs[@]}; do
 done
 
 echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
-echo "MAX INSTRUCTINOS: $max"
+echo "MAX INSTRUCTIONS: $max"

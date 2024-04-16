@@ -14,7 +14,6 @@
 
 int	sa_change(t_list *s)
 {
-	int		total;
 	t_stack	*top;
 	t_stack	*sec;
 
@@ -24,23 +23,13 @@ int	sa_change(t_list *s)
 		s = s->next;
 	top = s->next->content;
 	sec = s->content;
-	total = 0;
-	if (top->dist < 0)
-		total = 1;
-	else
-		total = -1;
-	if (sec->dist > 0)
-		total += 1;
-	else
-		total -= 1;
-	if (total == 0 && top->fi < sec->fi)
-		total = 2;
-	return (total);
+	if (top->fi < sec->fi)
+		return (1);
+	return (-1);
 }
 
 int	sb_change(t_list *s)
 {
-	int		total;
 	t_stack	*top;
 	t_stack	*sec;
 
@@ -50,17 +39,9 @@ int	sb_change(t_list *s)
 		s = s->next;
 	top = s->next->content;
 	sec = s->content;
-	if (top->dist > 0)
-		total = 1;
-	else
-		total = -1;
-	if (sec->dist < 0)
-		total += 1;
-	else
-		total -= 1;
-	if (total == 0 && top->fi > sec->fi)
-		total = 2;
-	return (total);
+	if (top->fi > sec->fi)
+		return (1);
+	return (-1);
 }
 
 int	stack_entropy(t_list *s)
