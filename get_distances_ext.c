@@ -34,7 +34,7 @@ int	sa_change(t_list *s)
 	else
 		total -= 1;
 	if (total == 0 && top->fi < sec->fi)
-		total = 65536;
+		total = 2;
 	return (total);
 }
 
@@ -59,7 +59,7 @@ int	sb_change(t_list *s)
 	else
 		total -= 1;
 	if (total == 0 && top->fi > sec->fi)
-		total = 65536;
+		total = 2;
 	return (total);
 }
 
