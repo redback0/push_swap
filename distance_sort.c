@@ -12,6 +12,9 @@
 
 #include "push_swap_solver.h"
 
+
+#include <libc.h>
+
 static char	**get_instr_arr(void)
 {
 	char	**out;
@@ -95,7 +98,7 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 			tmp = ft_log_base_n(c_b->fi, 10);
 			while (tmp++ < mlt)
 				ft_printf_fd(2, " ");
-			ft_printf_fd(2, "%d\n", c_b->fi);
+			ft_printf_fd(2, "%d : %d\n", c_b->fi, c_b->dist);
 			s_b = s_b->next;
 		}
 		else
@@ -104,32 +107,75 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 }
 
 
+static void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
+{
+	int	changes[9];
+	int	instr_i;
+
+//	int		s_a_sorted = 0;
+
+	instr_i = -1;
+	get_distances(s_a, s_b);
+	while (!stack_entropy(*s_a))
+	{
+		get_changes(*s_a, *s_b, changes);
+		instr_i = get_instr(changes, *s_a, instr_i);
+//		/*DEBUG*/if (s_a_sorted) {getchar(); print_stacks(*s_a, *s_b); ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);}
+//		/*DEBUG*/if (!s_a_sorted && !stack_entropy(*s_a))
+//		{
+//			print_stacks(*s_a, *s_b);
+//			ft_printf_fd(2, "STACK A SORTED AT %d INSTRUCTIONS\nSTACK B ENTROPY: %d\n", ft_lstsize(instr_lst), stack_entropy(*s_b));
+//			s_a_sorted = 1;
+//		} /*DEBUG*/
+		do_instr(instrs[instr_i], s_a, s_b);
+		if (!*instr_lst)
+			*instr_lst = ft_lstnew(instrs[instr_i]);
+		else
+			ft_lstlast(*instr_lst)->next = ft_lstnew(instrs[instr_i]);
+		get_distances(s_a, s_b);
+	}
+}
+
+static void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
+{
+	int	changes[9];
+	int	instr_i;
+
+//	int		s_a_sorted = 0;
+
+	instr_i = -1;
+	get_distances(s_a, s_b);
+	while (!check_solved(*s_a, *s_b))
+	{
+		get_changes(*s_a, *s_b, changes);
+		instr_i = get_instr(changes, *s_a, instr_i);
+//		/*DEBUG*/if (s_a_sorted) {getchar(); print_stacks(*s_a, *s_b); ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);}
+//		/*DEBUG*/if (!s_a_sorted && !stack_entropy(*s_a))
+//		{
+//			print_stacks(*s_a, *s_b);
+//			ft_printf_fd(2, "STACK A SORTED AT %d INSTRUCTIONS\nSTACK B ENTROPY: %d\n", ft_lstsize(instr_lst), stack_entropy(*s_b));
+//			s_a_sorted = 1;
+//		} /*DEBUG*/
+		do_instr(instrs[instr_i], s_a, s_b);
+		if (!*instr_lst)
+			*instr_lst = ft_lstnew(instrs[instr_i]);
+		else
+			ft_lstlast(*instr_lst)->next = ft_lstnew(instrs[instr_i]);
+		get_distances(s_a, s_b);
+	}
+}
+
 t_list	*distance_sort(t_list *s_a)
 {
 	t_list	*s_b;
-	int		changes[9];
 	char	**instrs;
 	t_list	*instr_lst;
-	int		instr_i;
 
 	s_b = 0;
 	instr_lst = 0;
-	instr_i = -1;
 	instrs = get_instr_arr();
-	get_distances(&s_a, &s_b);
-	while (!check_solved(s_a, s_b))
-	{
-		get_changes(s_a, s_b, changes);
-		instr_i = get_instr(changes, s_a, instr_i);
-//		print_stacks(s_a, s_b); // DEBUG
-//		ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]); // DEBUG
-		do_instr(instrs[instr_i], &s_a, &s_b);
-		if (!instr_lst)
-			instr_lst = ft_lstnew(instrs[instr_i]);
-		else
-			ft_lstlast(instr_lst)->next = ft_lstnew(instrs[instr_i]);
-		get_distances(&s_a, &s_b);
-	}
+	initial_sort(&s_a, &s_b, &instr_lst, instrs);
+	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);
 }

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 usage() {
 	echo "Usage: ./test.sh SIZE [-si]"
 }
@@ -22,16 +26,16 @@ if [ -z $size ]; then
 fi
 
 stack=$(awk -v loop=$size -v range=$(($size * 20)) -v take=$(($size * 10)) 'BEGIN{
-		srand()
-		do {
-			numb = 1 + int(rand() * range - take)
-			if (!(numb in prev)) {
-			print numb
-			prev[numb] = 1
-			count++
-			}
-		} while (count<loop)
-		}')
+	srand()
+	do {
+		numb = 1 + int(rand() * range - take)
+		if (!(numb in prev)) {
+		print numb
+		prev[numb] = 1
+		count++
+		}
+	} while (count<loop)
+	}')
 
 # write stack to stack.txt if -s specified
 if [ $pstack == 1 ]; then
@@ -54,7 +58,13 @@ echo "$instrs" | wc -l | tr -d ' '
 
 echo -n "RESULT: "
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	echo "$instrs" | ./checker_Mac ${stack[@]}
+	result=$(echo "$instrs" | ./checker_Mac ${stack[@]})
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	echo "$instrs" | ./checker_linux ${stack[@]}
+	result=$(echo "$instrs" | ./checker_linux ${stack[@]})
+fi
+
+if [[ "$result" == "OK" ]]; then
+	printf "${GREEN}${result}${NC}\n"
+else
+	printf "${RED}${result}${NC}\n"
 fi
