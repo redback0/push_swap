@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/16 18:44:47 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:17:10 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		ps_solver_error(int *arr);
 t_list	*distance_sort(t_list *s_a);
 
 int		stack_in_order(t_list *s);
+int		do_push_a(t_list *s_b, t_stack *a, int r_dir);
+int		do_push_b(t_list *s_b, t_stack *a, int r_dir);
 int		rotate_direction(t_list *s_b);
 
 // distance functions

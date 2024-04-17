@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:15:35 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/16 16:15:39 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:06:29 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,53 @@ int	stack_in_order(t_list *s)
 		s = s->next;
 	}
 	return (1);
+}
+
+int	do_push_a(t_list *s_b, t_stack *a, int r_dir)
+{
+	t_list	*tmp;
+	t_stack	*check;
+	t_stack	*before;
+	t_stack	*after;
+
+	(void)r_dir;
+	if (ft_lstsize(s_b) < 3)
+		return (0); // 1 or 2 operation save here?
+	tmp = s_b->next;
+	while (tmp->next->next)
+		tmp = tmp->next;
+	before = s_b->content;
+	after = tmp->content;
+	check = tmp->next->content;
+	if (check->dist < 0)
+		return (1);
+	if (before->fi + 1 == check->fi || check->fi + 1 == after->fi)
+		return (0);
+	if (a->dist == 0)
+		return (1);
+	return (0);
+}
+
+int	do_push_b(t_list *s_b, t_stack *a, int r_dir)
+{
+	t_list	*tmp;
+	t_stack	*before;
+	t_stack	*after;
+
+	(void)r_dir;
+	if (ft_lstsize(s_b) < 2)
+		return (0);
+	tmp = s_b;
+	while (tmp->next->next)
+		tmp = tmp->next;
+	before = s_b->content;
+	after = tmp->next->content;
+	if (before->fi + 1 == a->fi || a->fi + 1 == after->fi)
+	{
+//		/*DEBUG*/ft_printf_fd(2, "PUSHING B\n");
+		return (1);
+	}
+	return (0);
 }
 
 int	rotate_direction(t_list *s_b)
