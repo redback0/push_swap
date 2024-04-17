@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/17 12:13:02 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:24:23 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 		else
 			ft_lstlast(*instr_lst)->next = ft_lstnew(instrs[instr_i]);
 		get_distances(s_a, s_b);
-		/*SEGFAULT*/*instr_lst = (*instr_lst)->next->next;
 	}
 }
 
@@ -140,7 +139,7 @@ int	return_instr(t_list *s_a, t_list *s_b)
 		return (2);
 	if (last_a->dist < 0)
 		return (0);
-	change = rotate_direction(s_b);
+	change = next_position(s_b);
 	if ((!last_a->dist && !last_b->dist) || do_push_a(s_b, last_a, change))
 		return (10);
 	if (do_push_b(s_b, last_a, change))
@@ -149,9 +148,6 @@ int	return_instr(t_list *s_a, t_list *s_b)
 		return (7);
 	return (4);
 }
-
-
-#include <libc.h>
 
 void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 {
@@ -164,7 +160,6 @@ void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 		instr_i = return_instr(*s_a, *s_b);
 //		/*DEBUG*/print_stacks(*s_a, *s_b);
 //		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
-//		/*DEBUG*/if (!stack_entropy(*s_a)) ft_printf_fd(2, "STACK A SORTED AT %d INSTRUCTIONS\nSTACK B ENTROPY: %d\n", ft_lstsize(*instr_lst), stack_entropy(*s_b));
 //		/*DEBUG*/getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)

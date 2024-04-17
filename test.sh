@@ -72,7 +72,11 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	printf "SEED: ${seeds[$i]}\n"
 
 	instrs=$(./push_swap ${stack[@]})
-	echo $?
+	exitStatus=$?
+	if [[ $exitStatus -ne 0 ]]; then
+		echo "SEG FAULT :("
+		exit 1
+	fi
 	#write instructions to instrs.txt if -i specified
 	if [ $pinstr == 1 ]; then
 		echo "$instrs" >> instrs.txt
