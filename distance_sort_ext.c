@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:15:35 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/18 00:26:19 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:11:36 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,21 @@ int	do_push_a(t_list *s_b, t_stack *a, int n_pos)
 	int		r_dir;
 
 	t_b = s_b;
-	if (ft_lstsize(t_b) < 3)
+	if (ft_lstsize(t_b) < 3 || n_pos == ft_lstsize(s_b) / 2)
 		return (0);
 	before = t_b->content;
 	while (t_b->next->next)
 		t_b = t_b->next;
 	after = t_b->content;
 	check = t_b->next->content;
-	if (check->dist < 0)
-		return (1);
 	if (before->fi + 1 == check->fi || check->fi + 1 == after->fi)
 		return (0);
 	r_dir = (ft_lstsize(s_b) - n_pos) > n_pos;
-	if (a->dist != 0 && r_dir)
-		n_pos = find_touch_stack(s_b, a->fi, 0, n_pos);
-	else if (a->dist != 0)
-		n_pos = find_touch_stack(s_b, a->fi, n_pos, ft_lstsize(s_b));
-	if ((r_dir && (find_touch_stack(s_b, check->fi, 0, n_pos) >= 0)) ||
-		(!r_dir && (find_touch_stack(s_b, check->fi, n_pos, ft_lstsize(s_b)) >= 0)))
+	n_pos = find_touch_stack(s_b, a->fi, 0, n_pos);
+	if (n_pos < 0)
+		return (0);
+	if ((r_dir && (find_touch_stack(s_b, check->fi, 2, n_pos) >= 0)) ||
+		(!r_dir && (find_touch_stack(s_b, check->fi, n_pos + 1, ft_lstsize(s_b)) >= 0)))
 		return (1);
 	return (0);
 }
@@ -106,19 +103,25 @@ int	next_position(t_list *s_b)
 	return (least_i);
 }
 
+
+#include <stdio.h>
+
 int	find_touch_stack(t_list *s_b, int f, int s, int e)
 {
 	t_stack	*cont;
 	int 	i;
 
-	i = 0;
-	while (i++ < s && s_b)
+	i = -1;
+	while (++i < s && s_b)
 		s_b = s_b->next;
+//	/*DEBUG*/ft_printf_fd(2, "CHECKING FOR: %d +- 1 BETWEEN: %d : %d\n", f, s, e);
 	while (i < e && s_b)
 	{
 		cont = s_b->content;
 		if (cont->fi == f + 1 || cont->fi == f - 1)
 		{
+//			/*DEBUG*/ft_printf_fd(2, "FOUND %d AT: %d\n", cont->fi, i);
+//			/*DEBUG*/getchar();
 			return (i);
 		}
 		s_b = s_b->next;
