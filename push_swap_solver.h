@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/17 16:29:02 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:53:09 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int		do_push_a(t_list *s_b, t_stack *a, int n_pos);
 int		do_push_b(t_list *s_b, t_stack *a);
 int		next_position(t_list *s_b);
 int		find_touch_stack(t_list *s_b, int f, int s, int e);
+
+int		is_top_in_group(t_list *s_b);
 
 // distance functions
 void	get_distances(t_list **s_a, t_list **s_b);

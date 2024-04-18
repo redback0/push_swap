@@ -12,6 +12,7 @@ SRC = push_swap_solver.c \
 	  quicksort.c \
 	  distance_sort.c \
 	  distance_sort_ext.c \
+	  distance_sort_ext_ext.c \
 	  get_distances.c \
 	  get_distances_ext.c \
 

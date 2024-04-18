@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:15:35 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/18 12:11:36 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:53:38 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,23 @@ int	do_push_a(t_list *s_b, t_stack *a, int n_pos)
 {
 	t_list	*t_b;
 	t_stack	*check;
-	t_stack	*before;
-	t_stack	*after;
 	int		r_dir;
 
 	t_b = s_b;
 	if (ft_lstsize(t_b) < 3 || n_pos == ft_lstsize(s_b) / 2)
 		return (0);
-	before = t_b->content;
-	while (t_b->next->next)
-		t_b = t_b->next;
-	after = t_b->content;
-	check = t_b->next->content;
-	if (before->fi + 1 == check->fi || check->fi + 1 == after->fi)
+	if (is_top_in_group(s_b))
 		return (0);
+	while (t_b->next)
+		t_b = t_b->next;
+	check = t_b->content;
 	r_dir = (ft_lstsize(s_b) - n_pos) > n_pos;
 	n_pos = find_touch_stack(s_b, a->fi, 0, n_pos);
 	if (n_pos < 0)
 		return (0);
 	if ((r_dir && (find_touch_stack(s_b, check->fi, 2, n_pos) >= 0)) ||
-		(!r_dir && (find_touch_stack(s_b, check->fi, n_pos + 1, ft_lstsize(s_b)) >= 0)))
+		(!r_dir && (find_touch_stack(
+		s_b, check->fi, n_pos + 1, ft_lstsize(s_b)) >= 0)))
 		return (1);
 	return (0);
 }

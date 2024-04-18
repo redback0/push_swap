@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/18 12:11:00 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/18 12:52:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,9 @@ int	return_instr(t_list *s_a, t_list *s_b)
 		return (10);
 	if (do_push_b(s_b, last_a))
 		return (9);
-	if ((ft_lstsize(s_b) - change) > change)
+	if (sb_change(s_b) > 0)
+		return (1);
+	if ((ft_lstsize(s_b) - change) > change && is_top_in_group(s_b))
 		return (7);
 	return (4);
 }
