@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/18 20:10:15 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/19 13:50:15 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 }
 
 
+#include <stdio.h>
+
 void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 {
 	int	changes[9];
@@ -115,6 +117,9 @@ void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 	{
 		get_changes(*s_a, *s_b, changes);
 		instr_i = get_instr(changes, *s_a, instr_i);
+		/*DEBUG*/print_stacks(*s_a, *s_b);
+		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
+		/*DEBUG*/getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)
 			*instr_lst = ft_lstnew(instrs[instr_i]);
@@ -154,8 +159,6 @@ int	return_instr(t_list *s_a, t_list *s_b)
 	return (4);
 }
 
-#include <stdio.h>
-
 void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 {
 	int	instr_i;
@@ -165,16 +168,16 @@ void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 	while (!check_solved(*s_a, *s_b))
 	{
 		instr_i = return_instr(*s_a, *s_b);
-		/*DEBUG*/print_stacks(*s_a, *s_b);
-		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
-		/*DEBUG*/getchar();
+//		/*DEBUG*/print_stacks(*s_a, *s_b);
+//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
+//		/*DEBUG*/getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)
 			*instr_lst = ft_lstnew(instrs[instr_i]);
 		else
 			ft_lstlast(*instr_lst)->next = ft_lstnew(instrs[instr_i]);
 		get_distances(s_a, s_b);
-		/*DEBUG*/ft_printf_fd(2, "FINISHED ITERATION\n");
+//		/*DEBUG*/ft_printf_fd(2, "FINISHED ITERATION\n");
 	}
 }
 
@@ -189,6 +192,7 @@ t_list	*distance_sort(t_list *s_a)
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
 	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
+	/*DEBUG*/getchar();
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);
