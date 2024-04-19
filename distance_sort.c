@@ -106,7 +106,8 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 
 #include <stdio.h>
 
-void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
+void	initial_sort(t_list **s_a, t_list **s_b,
+	t_list **instr_lst, char **instrs)
 {
 	int	changes[9];
 	int	instr_i;
@@ -117,9 +118,9 @@ void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 	{
 		get_changes(*s_a, *s_b, changes);
 		instr_i = get_instr(changes, *s_a, instr_i);
-		/*DEBUG*/print_stacks(*s_a, *s_b);
-		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
-		/*DEBUG*/getchar();
+//		/*DEBUG*/print_stacks(*s_a, *s_b);
+//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
+//		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)
 			*instr_lst = ft_lstnew(instrs[instr_i]);
@@ -131,7 +132,7 @@ void	initial_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 
 int	return_instr(t_list *s_a, t_list *s_b)
 {
-	t_stack *last_a;
+	t_stack	*last_a;
 	t_stack	*last_b;
 	int		change;
 
@@ -147,8 +148,8 @@ int	return_instr(t_list *s_a, t_list *s_b)
 	change = next_position(s_b);
 	if (change == ft_lstsize(s_b))
 		return (1);
-	if ((last_a->dist == 0 && last_b->dist == 0) ||
-		do_push_a(s_b, last_a, change))
+	if ((last_a->dist == 0 && last_b->dist == 0)
+		|| do_push_a(s_b, last_a, change))
 		return (10);
 	if (do_push_b(s_b, last_a))
 		return (9);
@@ -170,7 +171,7 @@ void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 		instr_i = return_instr(*s_a, *s_b);
 //		/*DEBUG*/print_stacks(*s_a, *s_b);
 //		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
-//		/*DEBUG*/getchar();
+//		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)
 			*instr_lst = ft_lstnew(instrs[instr_i]);
@@ -191,8 +192,8 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
-	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
-	/*DEBUG*/getchar();
+//	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
+//	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);

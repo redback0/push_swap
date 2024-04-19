@@ -74,7 +74,7 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	instrs=$(./push_swap ${stack[@]})
 	exitStatus=$?
 	if [[ $exitStatus -ne 0 ]]; then
-		echo "SEG FAULT :("
+		printf "${RED}SEG FAULT :(${NC}\n"
 		exit 1
 	fi
 	#write instructions to instrs.txt if -i specified
