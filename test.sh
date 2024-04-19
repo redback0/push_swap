@@ -65,7 +65,7 @@ for (( i = 0 ; i < $runs ; i++ )); do
 
 	# write stack to stack.txt if -s specified
 	if [ $pstack == 1 ]; then
-		echo "$stack" >> stack.txt
+		echo "$stack" > stack.txt
 	fi
 
 	printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
@@ -79,7 +79,7 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	fi
 	#write instructions to instrs.txt if -i specified
 	if [ $pinstr == 1 ]; then
-		echo "$instrs" >> instrs.txt
+		echo "$instrs" > instrs.txt
 	fi
 	if [[ $instrs == "" ]]; then
 		echo "SOLVED LIST"

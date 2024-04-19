@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/18 12:52:49 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:10:15 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,14 @@ int	return_instr(t_list *s_a, t_list *s_b)
 	change = next_position(s_b);
 	if (change == ft_lstsize(s_b))
 		return (1);
-	if ((last_a->dist == 0 && last_b->dist == 0) || do_push_a(s_b, last_a, change))
+	if ((last_a->dist == 0 && last_b->dist == 0) ||
+		do_push_a(s_b, last_a, change))
 		return (10);
 	if (do_push_b(s_b, last_a))
 		return (9);
-	if (sb_change(s_b) > 0)
+	if (sb_change(s_b) > 0 && !is_top_in_group(s_b))
 		return (1);
-	if ((ft_lstsize(s_b) - change) > change && is_top_in_group(s_b))
+	if ((ft_lstsize(s_b) - change) > change)
 		return (7);
 	return (4);
 }
@@ -164,16 +165,16 @@ void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs)
 	while (!check_solved(*s_a, *s_b))
 	{
 		instr_i = return_instr(*s_a, *s_b);
-//		/*DEBUG*/print_stacks(*s_a, *s_b);
-//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
-//		/*DEBUG*/getchar();
+		/*DEBUG*/print_stacks(*s_a, *s_b);
+		/*DEBUG*/ft_printf_fd(2, "PICKED INSTR: %s\n", instrs[instr_i]);
+		/*DEBUG*/getchar();
 		do_instr(instrs[instr_i], s_a, s_b);
 		if (!*instr_lst)
 			*instr_lst = ft_lstnew(instrs[instr_i]);
 		else
 			ft_lstlast(*instr_lst)->next = ft_lstnew(instrs[instr_i]);
 		get_distances(s_a, s_b);
-//		/*DEBUG*/ft_printf_fd(2, "FINISHED ITERATION\n");
+		/*DEBUG*/ft_printf_fd(2, "FINISHED ITERATION\n");
 	}
 }
 
