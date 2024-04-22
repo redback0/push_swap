@@ -61,9 +61,7 @@ int	stack_entropy(t_list *s)
 
 int	check_solved(t_list *s_a, t_list *s_b)
 {
-	if (s_b)
-		return (0);
-	if (stack_entropy(s_a))
+	if (s_b || stack_entropy(s_a))
 		return (0);
 	return (1);
 }

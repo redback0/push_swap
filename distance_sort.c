@@ -59,7 +59,8 @@ int	get_instr(int *changes, t_list *s, int last)
 	return (10);
 }
 
-void	record_instr(char *instr, t_list **s_a, t_list **s_b, t_list **instr_lst)
+void	record_instr(char *instr, t_list **s_a,
+	t_list **s_b, t_list **instr_lst)
 {
 	do_instr(instr, s_a, s_b);
 	if (!*instr_lst)
@@ -69,52 +70,8 @@ void	record_instr(char *instr, t_list **s_a, t_list **s_b, t_list **instr_lst)
 	get_distances(s_a, s_b);
 }
 
-
-void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
-{
-	t_stack	*c_a;
-	t_stack	*c_b;
-	int		mlt;
-	int		tmp;
-
-	ft_printf_fd(2, "-- STACKS --\n");
-	mlt = ft_log_base_n(ft_lstsize(s_a) + ft_lstsize(s_b), 10);
-	while (s_a || s_b)
-	{
-		if (s_a)
-		{
-			c_a = s_a->content;
-			tmp = ft_log_base_n(c_a->fi, 10);
-			if (tmp == 0)
-				tmp = 1;
-			while (tmp++ <= mlt)
-				ft_printf_fd(2, " ");
-			ft_printf_fd(2, "%d | ", c_a->fi);
-			s_a = s_a->next;
-		}
-		else
-		{
-			tmp = 0;
-			while (tmp++ <= mlt)
-				ft_printf_fd(2, " ");
-			ft_printf_fd(2, " | ");
-		}
-		if (s_b)
-		{
-			c_b = s_b->content;
-			tmp = ft_log_base_n(c_b->fi, 10);
-			while (tmp++ < mlt)
-				ft_printf_fd(2, " ");
-			ft_printf_fd(2, "%d : %d\n", c_b->fi, c_b->dist);
-			s_b = s_b->next;
-		}
-		else
-			ft_printf_fd(2, "\n");
-	}
-}
-
-
 #include <stdio.h>
+#include "stack_printer.c"
 
 void	initial_sort(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
@@ -145,7 +102,7 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
-	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
+//	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
 //	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
