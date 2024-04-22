@@ -15,6 +15,7 @@ SRC = push_swap_solver.c \
 	  distance_sort_ext_ext.c \
 	  get_distances.c \
 	  get_distances_ext.c \
+	  return_sort.c \
 
 PS_LIB_SRC = push_swap.c \
 			 push_swap_utils.c \

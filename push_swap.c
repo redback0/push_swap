@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	do_instr(char *instr, t_list **s_a, t_list **s_b)
+void	do_instr(const char *instr, t_list **s_a, t_list **s_b)
 {
 	if (!ft_strncmp("sa", instr, 3))
 		swap_stack(s_a);

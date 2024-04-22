@@ -37,6 +37,8 @@ int		ps_solver_error(int *arr);
 // distance sort funcs
 t_list	*distance_sort(t_list *s_a);
 
+void	record_instr(char *instr, t_list **s_a, t_list **s_b, t_list **instr_lst);
+
 int		stack_in_order(t_list *s);
 int		do_push_a(t_list *s_b, t_stack *a, int n_pos);
 int		do_push_b(t_list *s_b, t_stack *a);
@@ -44,6 +46,9 @@ int		next_position(t_list *s_b);
 int		find_touch_stack(t_list *s_b, int f, int s, int e);
 
 int		is_top_in_group(t_list *s_b);
+
+// return sort
+void	return_sort(t_list **s_a, t_list **s_b, t_list **instr_lst, char **instrs);
 
 // distance functions
 void	get_distances(t_list **s_a, t_list **s_b);
