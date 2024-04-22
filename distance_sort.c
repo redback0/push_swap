@@ -145,7 +145,7 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
-//	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
+	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
 //	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);

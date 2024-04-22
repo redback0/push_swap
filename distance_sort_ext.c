@@ -28,52 +28,6 @@ int	stack_in_order(t_list *s)
 	return (1);
 }
 
-int	do_push_a(t_list *s_b, t_stack *a, int n_pos)
-{
-	t_list	*t_b;
-	t_stack	*check;
-	int		r_dir;
-
-	t_b = s_b;
-	if (ft_lstsize(t_b) < 3 || n_pos == ft_lstsize(s_b) / 2)
-		return (0);
-	if (is_top_in_group(s_b))
-		return (0);
-	while (t_b->next)
-		t_b = t_b->next;
-	check = t_b->content;
-	r_dir = (ft_lstsize(s_b) - n_pos) > n_pos;
-	n_pos = find_touch_stack(s_b, a->fi, 0, n_pos);
-	if (n_pos < 0)
-		return (0);
-	if ((r_dir && (find_touch_stack(s_b, check->fi, 2, n_pos) >= 0)) ||
-		(!r_dir && (find_touch_stack(
-		s_b, check->fi, n_pos + 1, ft_lstsize(s_b)) >= 0)))
-		return (1);
-	return (0);
-}
-
-int	do_push_b(t_list *s_b, t_stack *a)
-{
-	t_list	*tmp;
-	t_stack	*before;
-	t_stack	*after;
-
-	if (ft_lstsize(s_b) < 2)
-		return (0);
-	tmp = s_b;
-	while (tmp->next->next)
-		tmp = tmp->next;
-	before = s_b->content;
-	after = tmp->next->content;
-	if (before->fi + 1 == a->fi || a->fi + 1 == after->fi)
-	{
-//		/*DEBUG*/ft_printf_fd(2, "PUSHING B\n");
-		return (1);
-	}
-	return (0);
-}
-
 int	next_position(t_list *s_b)
 {
 	t_list	*next;
@@ -111,18 +65,34 @@ int	find_touch_stack(t_list *s_b, int f, int s, int e)
 	i = -1;
 	while (++i < s && s_b)
 		s_b = s_b->next;
-//	/*DEBUG*/ft_printf_fd(2, "CHECKING FOR: %d +- 1 BETWEEN: %d : %d\n", f, s, e);
+	/*DEBUG*/ft_printf_fd(2, "CHECKING FOR: %d +- 1 BETWEEN: %d : %d\n", f, s, e);
 	while (i < e && s_b)
 	{
 		cont = s_b->content;
 		if (cont->fi == f + 1 || cont->fi == f - 1)
 		{
-//			/*DEBUG*/ft_printf_fd(2, "FOUND %d AT: %d\n", cont->fi, i);
-//			/*DEBUG*/getchar();
+			/*DEBUG*/ft_printf_fd(2, "FOUND %d AT: %d\n", cont->fi, i);
 			return (i);
 		}
 		s_b = s_b->next;
 		i++;
 	}
+	/*DEBUG*/ft_printf_fd(2, "NOT FOUND BEFORE %d\n", i);
 	return (-1);
+}
+
+int	is_top_in_group(t_list *s_b)
+{
+	t_stack	*before;
+	t_stack	*after;
+	t_stack	*check;
+
+	before = s_b->content;
+	while (s_b->next->next)
+		s_b = s_b->next;
+	after = s_b->content;
+	check = s_b->next->content;
+	if (before->fi + 1 == check->fi || check->fi + 1 == after->fi)
+		return (1);
+	return (0);
 }
