@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/08 22:35:39 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:45:21 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char *argv[])
 	arr = index_arr(arr, argc - 1);
 	stack_a = init_stack_a(arr, argc - 1);
 	instr = distance_sort(stack_a);
+	cutdown_instr(&instr);
 	output_instr(instr);
 	return (0);
 }
