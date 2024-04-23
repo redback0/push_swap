@@ -65,6 +65,6 @@ void	print_stacks(t_list *s_a, t_list *s_b) // DEBUG FUNC
 	while (s_a || s_b)
 	{
 		s_a = print_sa_stack_ele(s_a, mlt);
-		s_b = print_sb_stack_ele(s_a, mlt);
+		s_b = print_sb_stack_ele(s_b, mlt);
 	}
 }

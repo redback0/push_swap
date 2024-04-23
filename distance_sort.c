@@ -70,8 +70,8 @@ void	record_instr(char *instr, t_list **s_a,
 	get_distances(s_a, s_b);
 }
 
-#include <stdio.h>
-#include "stack_printer.c"
+//#include <stdio.h>
+//#include "stack_printer.c"
 
 void	initial_sort(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
@@ -85,12 +85,12 @@ void	initial_sort(t_list **s_a, t_list **s_b,
 	{
 		get_changes(*s_a, *s_b, changes);
 		instr_i = get_instr(changes, *s_a, instr_i);
-//		/*DEBUG*/print_stacks(*s_a, *s_b);
-//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
-//		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 		record_instr(instrs[instr_i], s_a, s_b, instr_lst);
 	}
 }
+//		/*DEBUG*/print_stacks(*s_a, *s_b);
+//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
+//		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 
 t_list	*distance_sort(t_list *s_a)
 {
@@ -102,9 +102,9 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
-//	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
-//	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);
 }
+//	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));
+//	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();

@@ -44,7 +44,7 @@ void	record_instr(char *instr, t_list **s_a,
 
 int		stack_in_order(t_list *s);
 int		next_position(t_list *s_b);
-int		find_touch_stack(t_list *s_b, int f, int s, int e);
+//int		find_touch_stack(t_list *s_b, int f, int s, int e);
 
 int		is_top_in_group(t_list *s_b);
 

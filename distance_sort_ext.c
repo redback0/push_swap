@@ -56,8 +56,9 @@ int	next_position(t_list *s_b)
 	return (least_i);
 }
 
-#include <stdio.h>
+//#include <stdio.h>
 
+/*
 // THIS FUNCTION IS CURRENTLY UNUSED
 int	find_touch_stack(t_list *s_b, int f, int s, int e)
 {
@@ -67,21 +68,21 @@ int	find_touch_stack(t_list *s_b, int f, int s, int e)
 	i = -1;
 	while (++i < s && s_b)
 		s_b = s_b->next;
-//	/*DEBUG*/ft_printf_fd(2, "CHECKING FOR: %d +- 1 BETWEEN: %d : %d\n", f, s, e);
 	while (i < e && s_b)
 	{
 		cont = s_b->content;
 		if (cont->fi == f + 1 || cont->fi == f - 1)
 		{
-//			/*DEBUG*/ft_printf_fd(2, "FOUND %d AT: %d\n", cont->fi, i);
 			return (i);
 		}
 		s_b = s_b->next;
 		i++;
 	}
-//	/*DEBUG*/ft_printf_fd(2, "NOT FOUND BEFORE %d\n", i);
 	return (-1);
 }
+*/
+//			/*DEBUG*/ft_printf_fd(2, "FOUND %d AT: %d\n", cont->fi, i);
+//	/*DEBUG*/ft_printf_fd(2, "NOT FOUND BEFORE %d\n", i);
 
 // THIS FUNCTION IS CURRENTLY UNUSED
 int	is_top_in_group(t_list *s_b)

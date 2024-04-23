@@ -33,7 +33,8 @@ int	main(int argc, char *argv[])
 	arr = index_arr(arr, argc - 1);
 	stack_a = init_stack_a(arr, argc - 1);
 	instr = distance_sort(stack_a);
-	cutdown_instr(&instr);
+	if (ft_lstsize(instr) > 2)
+		cutdown_instr(&instr);
 	output_instr(instr);
 	return (0);
 }

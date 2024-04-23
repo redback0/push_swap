@@ -77,6 +77,7 @@ void	get_changes(t_list *s_a, t_list *s_b, int *changes)
 	changes[6] = rra_change(s_a);
 	changes[7] = rrb_change(s_b);
 	changes[8] = changes[6] + changes[7];
+}
 	/*
 	ft_printf_fd(2, "--CHANGES--\n");
 	ft_printf_fd(2, " sa: %d\n", changes[0]);
@@ -90,4 +91,3 @@ void	get_changes(t_list *s_a, t_list *s_b, int *changes)
 	ft_printf_fd(2, "rrr: %d\n", changes[8]);
 	ft_printf_fd(2, "--END--\n");
 	*/
-}
