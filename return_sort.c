@@ -12,7 +12,7 @@
 
 #include "push_swap_solver.h"
 
-static void	return_instr(t_list **s_a, t_list **s_b,
+static int	return_instr(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
 {
 	static int	on_bot = 0;
@@ -38,8 +38,8 @@ static void	return_instr(t_list **s_a, t_list **s_b,
 		record_instr(instrs[3], s_a, s_b, instr_lst);
 	}
 	else
-		record_instr(instrs[4 + ((ft_lstsize(*s_b) - n_pos) > n_pos) * 3],
-			s_a, s_b, instr_lst);
+		return (0);
+	return (1);
 }
 
 //#include "stack_printer.c"
@@ -48,10 +48,17 @@ static void	return_instr(t_list **s_a, t_list **s_b,
 void	return_sort(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
 {
+	int	moved;
+	int	n_pos;
+
 	get_distances(s_a, s_b);
 	while (!check_solved(*s_a, *s_b))
 	{
-		return_instr(s_a, s_b, instr_lst, instrs);
+		moved = return_instr(s_a, s_b, instr_lst, instrs);
+		n_pos = next_position(*s_b);
+		if (!moved)
+			record_instr(instrs[4 + ((ft_lstsize(*s_b) - n_pos) > n_pos) * 3],
+				s_a, s_b, instr_lst);
 		get_distances(s_a, s_b);
 	}
 }
