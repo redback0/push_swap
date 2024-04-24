@@ -1,6 +1,6 @@
 NAME = push_swap
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 PS_LIB = push_swap.a
 
@@ -13,7 +13,7 @@ SRC = push_swap_solver.c \
 	  distance_sort.c \
 	  distance_sort_ext.c \
 	  get_distances.c \
-	  get_distances_ext.c \
+	  initial_sort.c \
 	  return_sort.c \
 
 PS_LIB_SRC = push_swap.c \

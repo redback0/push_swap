@@ -40,93 +40,24 @@ void	get_distances(t_list **s_a, t_list **s_b)
 	}
 }
 
-int	ra_change(t_list *s)
+int	stack_entropy(t_list *s)
 {
 	t_stack	*cont;
 	int		total;
 
-	if (!s || ft_lstsize(s) < 3)
-		return (-1);
 	total = 0;
-	while (s->next)
-	{
-		cont = s->content;
-		if (cont->dist > 0)
-			total++;
-		else if (ft_lstsize(s) != 2)
-			total--;
-		s = s->next;
-	}
-	cont = s->content;
-	total += (ft_abs(cont->dist) - cont->fi);
-	return (total);
-}
-
-int	rra_change(t_list *s)
-{
-	t_stack	*cont;
-	int		total;
-	int		new_dist;
-
-	if (!s || ft_lstsize(s) < 3)
-		return (-1);
-	cont = s->content;
-	new_dist = cont->fi - (ft_lstsize(s) - 1);
-	total = (cont->dist - ft_abs(new_dist));
-	s = s->next;
 	while (s)
 	{
 		cont = s->content;
-		if (cont->dist < 0)
-			total++;
-		else if (ft_lstsize(s) != 1)
-			total--;
+		total += ft_abs(cont->dist);
 		s = s->next;
 	}
 	return (total);
 }
 
-int	rb_change(t_list *s)
+int	check_solved(t_list *s_a, t_list *s_b)
 {
-	t_stack	*rcont;
-	t_stack	*cont;
-	int		total;
-
-	if (!s || ft_lstsize(s) < 3)
-		return (-1);
-	rcont = ft_lstlast(s)->content;
-	total = 0;
-	while (s->next->next)
-	{
-		cont = s->content;
-		if (cont->fi < rcont->fi)
-			total++;
-		else
-			total--;
-		s = s->next;
-	}
-	return (total);
-}
-
-int	rrb_change(t_list *s)
-{
-	t_stack	*rcont;
-	t_stack	*cont;
-	int		total;
-
-	if (!s || ft_lstsize(s) < 3)
-		return (-1);
-	rcont = s->content;
-	s = s->next;
-	total = 0;
-	while (s->next)
-	{
-		cont = s->content;
-		if (cont->fi > rcont->fi)
-			total++;
-		else
-			total--;
-		s = s->next;
-	}
-	return (total);
+	if (s_b || stack_entropy(s_a))
+		return (0);
+	return (1);
 }

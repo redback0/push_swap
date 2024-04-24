@@ -13,15 +13,17 @@ size=$1
 runs=1
 pstack=0
 pinstr=0
+silent=0
 seeds=()
 shift 1
 
-while getopts "dir:s:" flag; do
+while getopts "dir:s:q" flag; do
 	case $flag in
 		d) pstack=1 ;;
 		i) pinstr=1 ;;
 		r) runs="${OPTARG}" ;;
 		s) seeds[0]="${OPTARG}" ;;
+		q) silent=1 ;;
 		*) usage && exit 0 ;;
 	esac
 done
@@ -69,7 +71,9 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	fi
 
 	printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
-	printf "SEED: ${seeds[$i]}\n"
+	if [ $silent == 0 ]; then
+		printf "SEED: ${seeds[$i]}\n"
+	fi
 
 	instrs=$(./push_swap ${stack[@]})
 	exitStatus=$?
@@ -84,27 +88,29 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	if [[ $instrs == "" ]]; then
 		echo "SOLVED LIST"
 	else
-		echo -n "TOTAL INSTRUCTIONS: "
 		wcs[$i]=$(echo "$instrs" | wc -l | tr -d ' ')
 		sum=$(( $sum + ${wcs[$i]} ))
 		if [[ ${wcs[$i]} -gt $max ]]; then
 			max=${wcs[$i]}
 			maxseed=${seeds[$i]}
 		fi
-		echo ${wcs[$i]}
-
-		echo -n "RESULT: "
+		if [ $silent == 0 ]; then
+			echo -n "TOTAL INSTRUCTIONS: "
+			echo ${wcs[$i]}
+		fi
 		if [[ "$OSTYPE" == "darwin"* ]]; then
 			result=$(echo "$instrs" | ./checker_Mac ${stack[@]})
 		elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 			result=$(echo "$instrs" | ./checker_linux ${stack[@]})
 		fi
-
-		if [[ "$result" == "OK" ]]; then
-			printf "${GREEN}${result}${NC}\n"
-		else
-			printf "${RED}${result}${NC}\n"
-			exit 1
+		if [ $silent == 0 ]; then
+			echo -n "RESULT: "
+			if [[ "$result" == "OK" ]]; then
+				printf "${GREEN}${result}${NC}\n"
+			else
+				printf "${RED}${result}${NC}\n"
+				exit 1
+			fi
 		fi
 	fi
 done

@@ -31,34 +31,6 @@ static char	**get_instr_arr(void)
 	return (out);
 }
 
-int	get_instr(int *changes, t_list *s, int last)
-{
-	int	out;
-
-	if (last == 3 || last == 4)
-		changes[last + 3] = -1;
-	else if (last == 6 || last == 7)
-		changes[last - 3] = -1;
-	else if (last == 5)
-	{
-		changes[6] = -1;
-		changes[7] = -1;
-		changes[8] = -1;
-	}
-	else if (last == 8)
-	{
-		changes[3] = -1;
-		changes[4] = -1;
-		changes[5] = -1;
-	}
-	out = ft_arrmax(changes, 9);
-	if (changes[out] > 0)
-		return (out);
-	if (!stack_in_order(s))
-		return (9);
-	return (10);
-}
-
 void	record_instr(char *instr, t_list **s_a,
 	t_list **s_b, t_list **instr_lst)
 {
@@ -70,27 +42,34 @@ void	record_instr(char *instr, t_list **s_a,
 	get_distances(s_a, s_b);
 }
 
-//#include <stdio.h>
 //#include "stack_printer.c"
+//#include <stdio.h> /*DEBUG*/
 
-void	initial_sort(t_list **s_a, t_list **s_b,
+void	sort_three(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
 {
-	int	changes[9];
-	int	instr_i;
+	t_stack	*stacks[3];
 
-	instr_i = -1;
-	get_distances(s_a, s_b);
-	while (stack_entropy(*s_a))
+	if (!(*s_a)->next)
+		return ;
+	stacks[0] = (*s_a)->content;
+	stacks[1] = (*s_a)->next->content;
+	if ((*s_a)->next->next)
 	{
-		get_changes(*s_a, *s_b, changes);
-		instr_i = get_instr(changes, *s_a, instr_i);
-		record_instr(instrs[instr_i], s_a, s_b, instr_lst);
+		stacks[2] = (*s_a)->next->next->content;
+		if (stacks[0]->fi > stacks[1]->fi && stacks[1]->fi < stacks[2]->fi)
+			record_instr(instrs[6], s_a, s_b, instr_lst);
+		else if (stacks[0]->fi > stacks[2]->fi)
+			record_instr(instrs[3], s_a, s_b, instr_lst);
+		stacks[0] = (*s_a)->content;
+		stacks[1] = (*s_a)->next->content;
+		stacks[2] = (*s_a)->next->next->content;
+		if (stacks[1]->fi > stacks[2]->fi)
+			record_instr(instrs[0], s_a, s_b, instr_lst);
 	}
 }
-//		/*DEBUG*/print_stacks(*s_a, *s_b);
-//		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
-//		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
+//	/*DEBUG*/print_stacks(*s_a, *s_b);
+//	/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
 
 t_list	*distance_sort(t_list *s_a)
 {
@@ -102,6 +81,7 @@ t_list	*distance_sort(t_list *s_a)
 	instr_lst = 0;
 	instrs = get_instr_arr();
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
+	sort_three(&s_a, &s_b, &instr_lst, instrs);
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
 	free(instrs);
 	return (instr_lst);

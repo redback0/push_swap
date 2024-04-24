@@ -48,24 +48,18 @@ int		next_position(t_list *s_b);
 
 int		is_top_in_group(t_list *s_b);
 
+// initial sort
+void	initial_sort(t_list **s_a, t_list **s_b,
+			t_list **instr_lst, char **instrs);
+
 // return sort
 void	return_sort(t_list **s_a, t_list **s_b,
 			t_list **instr_lst, char **instrs);
 
 // distance functions
 void	get_distances(t_list **s_a, t_list **s_b);
-
-int		ra_change(t_list *s);
-int		rb_change(t_list *s);
-int		rra_change(t_list *s);
-int		rrb_change(t_list *s);
-
-int		sa_change(t_list *s);
-int		sb_change(t_list *s);
 int		stack_entropy(t_list *s);
-
 int		check_solved(t_list *s_a, t_list *s_b);
-void	get_changes(t_list *s_a, t_list *s_b, int *changes);
 
 // quicksort functions
 int		partition(t_imap *arr, int start, int end);
