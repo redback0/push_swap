@@ -13,17 +13,17 @@ size=$1
 runs=1
 pstack=0
 pinstr=0
-silent=0
+silent=1
 seeds=()
 shift 1
 
-while getopts "dir:s:q" flag; do
+while getopts "dir:s:v" flag; do
 	case $flag in
 		d) pstack=1 ;;
 		i) pinstr=1 ;;
 		r) runs="${OPTARG}" ;;
 		s) seeds[0]="${OPTARG}" ;;
-		q) silent=1 ;;
+		v) silent=0 ;;
 		*) usage && exit 0 ;;
 	esac
 done
@@ -70,9 +70,14 @@ for (( i = 0 ; i < $runs ; i++ )); do
 		echo "$stack" > stack.txt
 	fi
 
-	printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
 	if [ $silent == 0 ]; then
+		printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
 		printf "SEED: ${seeds[$i]}\n"
+	else
+		if [ $i -gt 0 ]; then
+			printf "\r"
+		fi
+		printf "$((i+1))"
 	fi
 
 	instrs=$(./push_swap ${stack[@]})
@@ -115,6 +120,7 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	fi
 done
 
+echo
 printf "\n${YELLOW}----FINAL RESULTS----${NC}\n"
 echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
 echo "MAX INSTRUCTIONS: $max (seed: $maxseed)"

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:04:21 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/25 19:50:28 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:42:02 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,14 @@ static int	get_max(t_list *s_a)
 	return (max);
 }
 
-static int	get_init_range(int n)
+static int	get_init_range(int n, int a)
 {
 	int		out;
 
 	out = 0;
-	while (n)
-	{
-		n = n >> 1;
-		out++;
-	}
+	out = ft_log_base_n(n, 2);
 	out *= out;
-	return ((out >> 2) + 1);
+	return ((out >> 2) + a);
 }
 
 //#include <stdio.h>
@@ -50,11 +46,13 @@ void	initial_sort(t_list **s_a, t_list **s_b,
 {
 	t_stack	*stack;
 	int		range;
+	int		add_range;
 
+	add_range = ft_lstsize(*s_a) / 60;
 	while (ft_lstsize(*s_a) > 3)
 	{
 		stack = ft_lstlast(*s_a)->content;
-		range = get_init_range(get_max(*s_a));
+		range = get_init_range(get_max(*s_a), add_range);
 		if (ft_lstsize(*s_a) - stack->fi <= range && stack->fi > 2)
 			record_instr(instrs[9], s_a, s_b, instr_lst);
 		else
