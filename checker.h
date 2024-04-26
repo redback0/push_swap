@@ -13,14 +13,16 @@
 #ifndef CHECKER_H
 # define CHECKER_H
 
-#include "libft.h"
-#include "push_swap.h"
+# define BUFFER_SIZE 1
+
+# include "libft.h"
+# include "push_swap.h"
 
 int		checker_err(int *arr);
 int		check_dups(int *arr, int size);
 t_list	*init_stack_a(int *arr, int size);
-t_list	*read_instrs(void);
+int		check_instrs(t_list *s_a);
 
-int		check_instrs(t_list *instrs, t_list *s_a);
+int		stack_in_order(t_list *s_a);
 
 #endif

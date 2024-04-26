@@ -5,22 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 14:02:16 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/26 14:02:17 by njackson         ###   ########.fr       */
+/*   Created: 2024/04/26 15:38:19 by njackson          #+#    #+#             */
+/*   Updated: 2024/04/26 15:38:21 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int	check_instrs(t_list *instrs, t_list *s_a)
+int	stack_in_order(t_list *s)
 {
-	t_list	*s_b;
+	int	a;
+	int	b;
 
-	s_b = 0;
-	while (instrs)
+	while (s && s->next)
 	{
-		if (!do_instr(instrs->content, &s_a, &s_b))
-			checker_err(0);
+		a = *(int *)s->content;
+		b = *(int *)s->next->content;
+		if (a < b)
+			return (0);
+		s = s->next;
 	}
 	return (1);
 }

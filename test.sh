@@ -103,7 +103,9 @@ for (( i = 0 ; i < $runs ; i++ )); do
 			echo -n "TOTAL INSTRUCTIONS: "
 			echo ${wcs[$i]}
 		fi
-		if [[ "$OSTYPE" == "darwin"* ]]; then
+		if test -f "checker"; then
+			result=$(echo "$instrs" | ./checker ${stack[@]})
+		elif [[ "$OSTYPE" == "darwin"* ]]; then
 			result=$(echo "$instrs" | ./checker_Mac ${stack[@]})
 		elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 			result=$(echo "$instrs" | ./checker_linux ${stack[@]})

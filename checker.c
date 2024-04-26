@@ -16,7 +16,6 @@ int	main(int argc, char *argv[])
 {
 	int		*arr;
 	t_list	*stack_a;
-	t_list	*instrs;
 	int		err;
 	int		i;
 
@@ -31,11 +30,11 @@ int	main(int argc, char *argv[])
 	if (err || check_dups(arr, argc - 1))
 		checker_err(arr);
 	stack_a = init_stack_a(arr, argc - 1);
-	instrs = read_instrs();
-	if (check_instrs(instrs, stack_a))
+	if (check_instrs(stack_a))
 		ft_printf_fd(1, "OK\n");
 	else
 		ft_printf_fd(1, "KO\n");
+	free(arr);
 }
 
 int	checker_err(int *arr)
@@ -90,32 +89,32 @@ t_list	*init_stack_a(int *arr, int size)
 	return (stack);
 }
 
-t_list	*read_instrs(void)
+int	check_instrs(t_list *s_a)
 {
-	t_list	*instr_lst;
-	t_list	*end;
+	t_list	*s_b;
 	char	*instr;
-	int		i;
 
-	instr_lst = 0;
+	s_b = 0;
 	instr = get_next_line(0);
 	while (instr)
 	{
-		i = -1;
-		while (instr[++i])
-			if (instr[i] == '\n')
-				instr[i] = 0;
-		if (!instr_lst)
-		{
-			instr_lst = ft_lstnew(instr);
-			end = instr_lst;
-		}
-		else
-		{
-			end->next = ft_lstnew(instr);
-			end = end->next;
-		}
+		if (instr[2] == '\n')
+			instr[2] = 0;
+		else if (instr[3] == '\n')
+			instr[3] = 0;
+		if (do_instr(instr, &s_a, &s_b))
+			checker_err(0);
+		free(instr);
 		instr = get_next_line(0);
 	}
-	return (instr_lst);
+	if (s_b)
+		ft_lstclear(&s_b, *free);
+	if (stack_in_order(s_a) && !s_b)
+	{
+		ft_lstclear(&s_a, *free);
+		return (1);
+	}
+	if (s_a)
+		ft_lstclear(&s_a, *free);
+	return (0);
 }
