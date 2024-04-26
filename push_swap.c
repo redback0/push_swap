@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	do_instr(const char *instr, t_list **s_a, t_list **s_b)
+int	do_instr(const char *instr, t_list **s_a, t_list **s_b)
 {
 	if (!ft_strncmp("sa", instr, 3))
 		swap_stack(s_a);
@@ -36,6 +36,9 @@ void	do_instr(const char *instr, t_list **s_a, t_list **s_b)
 		rev_rotate_stack(s_b);
 	else if (!ft_strncmp("rrr", instr, 4))
 		rev_rotate_ab(s_a, s_b);
+	else
+		return (1);
+	return (0);
 }
 
 void	rev_rotate_stack(t_list **stack)

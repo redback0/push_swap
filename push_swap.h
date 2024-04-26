@@ -20,7 +20,7 @@ void	rotate_stack(t_list **stack);
 void	rev_rotate_stack(t_list **stack);
 void	push_stack(t_list **to, t_list **from);
 void	swap_stack(t_list **stack);
-void	do_instr(const char *instr, t_list **s_a, t_list **s_b);
+int		do_instr(const char *instr, t_list **s_a, t_list **s_b);
 
 void	swap_ab(t_list **s_a, t_list **s_b);
 void	rotate_ab(t_list **s_a, t_list **s_b);

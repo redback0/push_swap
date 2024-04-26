@@ -1,4 +1,5 @@
 NAME = push_swap
+BONUS = checker
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -19,10 +20,16 @@ SRC = push_swap_solver.c \
 PS_LIB_SRC = push_swap.c \
 			 push_swap_utils.c \
 
+B_SRC = checker.c \
+		checker_ext.c \
+
 OBJ = $(SRC:.c=.o)
 PS_LIB_OBJ = $(PS_LIB_SRC:.c=.o)
+B_OBJ = $(B_SRC:.c=.o)
 
 all: $(NAME)
+
+bonus: $(BONUS)
 
 $(NAME): $(PS_LIB) $(LIBFT) $(OBJ)
 	@echo "<$(NAME)>CREATING push_swap"
@@ -44,14 +51,18 @@ $(LIBFT): $(LIBFT_HEADER)
 $(LIBFT_HEADER):
 	@cp libft/$(LIBFT_HEADER) .
 
+$(BONUS): $(PS_LIB) $(LIBFT) $(B_OBJ)
+	@echo "<$(NAME)>CREATING $(BONUS)"
+	@$(CC) $(CFLAGS) -o $(BONUS) $(B_OBJ) $(PS_LIB) $(LIBFT)
+
 clean:
 	@echo "<$(NAME)>REMOVING ALL OBJ"
 	@make fclean -C libft
-	@rm -f $(OBJ) $(PS_LIB_OBJ)
+	@rm -f $(OBJ) $(PS_LIB_OBJ) $(B_OBJ)
 
 fclean: clean
 	@echo "<$(NAME)>REMOVING LIBS/EXEC"
-	@rm -f $(NAME) $(PS_LIB) $(LIBFT) $(LIBFT_HEADER)
+	@rm -f $(NAME) $(BONUS) $(PS_LIB) $(LIBFT) $(LIBFT_HEADER)
 
 re: fclean all
 
