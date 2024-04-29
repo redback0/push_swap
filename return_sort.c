@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:59:27 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/22 12:59:29 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:31:24 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ static int	return_instr(t_list **s_a, t_list **s_b,
 	if (*s_b)
 		stacks[2] = ft_lstlast(*s_b)->content;
 	n_pos = next_position(*s_b);
-	if (on_bot && stacks[0]->fi == stacks[1]->fi + 1)
-	{
-		on_bot--;
+	if (on_bot-- && stacks[0]->fi == stacks[1]->fi + 1)
 		record_instr(instrs[6], s_a, s_b, instr_lst);
-	}
-	else if (n_pos == ft_lstsize(*s_b) - 1)
+	else if (on_bot++ > -2 && n_pos == ft_lstsize(*s_b) - 1)
 		record_instr(instrs[10], s_a, s_b, instr_lst);
-	else if (!on_bot || stacks[0]->fi > stacks[2]->fi)
+	else if ((!on_bot || stacks[0]->fi > stacks[2]->fi)
+		&& !is_top_in_group(*s_b))
 	{
 		on_bot++;
 		record_instr(instrs[10], s_a, s_b, instr_lst);
@@ -44,6 +42,7 @@ static int	return_instr(t_list **s_a, t_list **s_b,
 
 //#include "stack_printer.c"
 //#include <stdio.h> /*DEBUG*/
+//void	print_stacks(t_list *s_a, t_list *s_b);
 
 void	return_sort(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)

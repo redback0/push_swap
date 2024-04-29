@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/19 13:50:15 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:28:10 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,25 @@ void	record_instr(char *instr, t_list **s_a,
 	get_distances(s_a, s_b);
 }
 
+int	do_ss(t_list *s_b)
+{
+	t_stack	*sec;
+	t_stack	*top;
+
+	if (!s_b || !s_b->next)
+		return (0);
+	while (s_b->next->next)
+		s_b = s_b->next;
+	sec = s_b->content;
+	top = s_b->next->content;
+	if (sec->fi < top->fi)
+		return (1);
+	return (0);
+}
+
 //#include "stack_printer.c"
 //#include <stdio.h> /*DEBUG*/
+//void	print_stacks(t_list *s_a, t_list *s_b);
 
 void	sort_three(t_list **s_a, t_list **s_b,
 	t_list **instr_lst, char **instrs)
@@ -65,7 +82,12 @@ void	sort_three(t_list **s_a, t_list **s_b,
 		stacks[1] = (*s_a)->next->content;
 		stacks[2] = (*s_a)->next->next->content;
 		if (stacks[1]->fi > stacks[2]->fi)
-			record_instr(instrs[0], s_a, s_b, instr_lst);
+		{
+			if (do_ss(*s_b))
+				record_instr(instrs[2], s_a, s_b, instr_lst);
+			else
+				record_instr(instrs[0], s_a, s_b, instr_lst);
+		}
 	}
 }
 //	/*DEBUG*/print_stacks(*s_a, *s_b);

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.o>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:04:21 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/25 21:42:02 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:08:12 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void	initial_sort(t_list **s_a, t_list **s_b,
 			record_instr(instrs[3], s_a, s_b, instr_lst);
 	}
 }
-//		/*DEBUG*/print_stacks(*s_a, *s_b);
 //		/*DEBUG*/ft_printf_fd(2, "PICKED INSTRUCTION %s\n", instrs[instr_i]);
+//		/*DEBUG*/print_stacks(*s_a, *s_b);
 //		/*DEBUG*/ft_printf_fd(2, "<<BREAK POINT>>"); getchar();
