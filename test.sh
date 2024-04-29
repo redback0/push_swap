@@ -6,7 +6,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 usage() {
-	echo "Usage: ./test.sh SIZE [-si] [-r RUNS]"
+	echo "Usage: ./test.sh SIZE [-div] [[-s SEED] | [-r RUNS]]"
 }
 
 size=$1
