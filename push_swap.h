@@ -16,14 +16,14 @@
 # include "libft.h"
 
 // push_swap instructions
-void	rotate_stack(t_list **stack);
-void	rev_rotate_stack(t_list **stack);
-void	push_stack(t_list **to, t_list **from);
-void	swap_stack(t_list **stack);
-int		do_instr(const char *instr, t_list **s_a, t_list **s_b);
+int	rotate_stack(t_list **stack);
+int	rev_rotate_stack(t_list **stack);
+int	push_stack(t_list **to, t_list **from);
+int	swap_stack(t_list **stack);
+int	do_instr(const char *instr, t_list **s_a, t_list **s_b);
 
-void	swap_ab(t_list **s_a, t_list **s_b);
-void	rotate_ab(t_list **s_a, t_list **s_b);
-void	rev_rotate_ab(t_list **s_a, t_list **s_b);
+int	swap_ab(t_list **s_a, t_list **s_b);
+int	rotate_ab(t_list **s_a, t_list **s_b);
+int	rev_rotate_ab(t_list **s_a, t_list **s_b);
 
 #endif

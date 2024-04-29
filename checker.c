@@ -21,7 +21,7 @@ int	main(int argc, char *argv[])
 
 	arr = 0;
 	if (argc < 2)
-		checker_err(arr);
+		return (0);
 	arr = (int *)malloc((argc - 1) * sizeof(int));
 	err = 0;
 	i = -1;
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 	free(arr);
 }
 
-int	checker_err(int *arr)
+void	checker_err(int *arr)
 {
 	if (arr)
 		free(arr);
@@ -93,28 +93,21 @@ int	check_instrs(t_list *s_a)
 {
 	t_list	*s_b;
 	char	*instr;
+	int		out;
 
 	s_b = 0;
 	instr = get_next_line(0);
 	while (instr)
 	{
-		if (instr[2] == '\n')
-			instr[2] = 0;
-		else if (instr[3] == '\n')
-			instr[3] = 0;
-		if (do_instr(instr, &s_a, &s_b))
-			checker_err(0);
-		free(instr);
+		process_instr(instr, &s_a, &s_b);
 		instr = get_next_line(0);
 	}
 	if (s_b)
 		ft_lstclear(&s_b, *free);
+	out = 0;
 	if (stack_in_order(s_a) && !s_b)
-	{
-		ft_lstclear(&s_a, *free);
-		return (1);
-	}
+		out = 1;
 	if (s_a)
 		ft_lstclear(&s_a, *free);
-	return (0);
+	return (out);
 }

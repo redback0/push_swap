@@ -18,11 +18,12 @@
 # include "libft.h"
 # include "push_swap.h"
 
-int		checker_err(int *arr);
+void	checker_err(int *arr);
 int		check_dups(int *arr, int size);
 t_list	*init_stack_a(int *arr, int size);
 int		check_instrs(t_list *s_a);
 
 int		stack_in_order(t_list *s_a);
+void	process_instr(char *instr, t_list **s_a, t_list **s_b);
 
 #endif

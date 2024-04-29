@@ -37,7 +37,7 @@ int	ft_atoi_strict(const char *str, int *err)
 	{
 		chkof = out;
 		out = (out * 10) + (*(str++) - 48);
-		if (out / 10 != chkof && !(out < 0 && out - 1 > 0))
+		if (out / 10 != chkof && (sign == 1 || !(out < 0 && out - 1 > 0)))
 			return (ft_atoi_err(err));
 	}
 	if (*str)

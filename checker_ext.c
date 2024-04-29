@@ -27,3 +27,19 @@ int	stack_in_order(t_list *s)
 	}
 	return (1);
 }
+
+void	process_instr(char *instr, t_list **s_a, t_list **s_b)
+{
+	int	err;
+
+	if (instr[2] == '\n')
+		instr[2] = 0;
+	else if (instr[3] == '\n')
+		instr[3] = 0;
+	else
+		checker_err(0);
+	err = do_instr(instr, s_a, s_b);
+	if (err < 0)
+		checker_err(0);
+	free(instr);
+}

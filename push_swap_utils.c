@@ -12,20 +12,23 @@
 
 #include "push_swap.h"
 
-void	swap_ab(t_list **s_a, t_list **s_b)
+int	swap_ab(t_list **s_a, t_list **s_b)
 {
-	swap_stack(s_a);
-	swap_stack(s_b);
+	if (swap_stack(s_a) || swap_stack(s_b))
+		return (1);
+	return (0);
 }
 
-void	rotate_ab(t_list **s_a, t_list **s_b)
+int	rotate_ab(t_list **s_a, t_list **s_b)
 {
-	rotate_stack(s_a);
-	rotate_stack(s_b);
+	if (rotate_stack(s_a) || rotate_stack(s_b))
+		return (1);
+	return (0);
 }
 
-void	rev_rotate_ab(t_list **s_a, t_list **s_b)
+int	rev_rotate_ab(t_list **s_a, t_list **s_b)
 {
-	rev_rotate_stack(s_a);
-	rev_rotate_stack(s_b);
+	if (rev_rotate_stack(s_a) || rev_rotate_stack(s_b))
+		return (1);
+	return (0);
 }
