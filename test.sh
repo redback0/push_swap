@@ -51,6 +51,7 @@ fi
 sum=0
 max=0
 maxseed=
+min=-1
 
 for (( i = 0 ; i < $runs ; i++ )); do
 	stack=$(awk -v loop=$size -v range=$(($size * 20)) -v take=$(($size * 10)) -v seed=${seeds[$i]} 'BEGIN{
@@ -95,6 +96,9 @@ for (( i = 0 ; i < $runs ; i++ )); do
 	else
 		wcs[$i]=$(echo "$instrs" | wc -l | tr -d ' ')
 		sum=$(( $sum + ${wcs[$i]} ))
+		if [[ ${wcs[$i]} -lt $min ]] || [[ $min -lt 0 ]]; then
+			min=${wcs[$i]}
+		fi
 		if [[ ${wcs[$i]} -gt $max ]]; then
 			max=${wcs[$i]}
 			maxseed=${seeds[$i]}
@@ -125,4 +129,5 @@ done
 echo
 printf "\n${YELLOW}----FINAL RESULTS----${NC}\n"
 echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
+echo "MIN INSTRUCTIONS: $min"
 echo "MAX INSTRUCTIONS: $max (seed: $maxseed)"
