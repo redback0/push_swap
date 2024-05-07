@@ -6,23 +6,45 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 20:49:55 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/22 18:54:34 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:42:35 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_solver.h"
 
+int	check_dups(int *arr, int size)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < size)
+	{
+		j = i;
+		while (j-- > 0)
+		{
+			if (arr[i] == arr[j])
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 t_list	*comb_instr(char *curr, char *next)
 {
+	char	**instrs;
+
+	instrs = get_instr_arr();
 	if ((!ft_strncmp(curr, "sa", 3) && !ft_strncmp(next, "sb", 3))
 		|| (!ft_strncmp(curr, "sb", 3) && !ft_strncmp(next, "sa", 3)))
-		return (ft_lstnew(ft_strdup("ss")));
+		return (ft_lstnew(instrs[2]));
 	if ((!ft_strncmp(curr, "ra", 3) && !ft_strncmp(next, "rb", 3))
 		|| (!ft_strncmp(curr, "rb", 3) && !ft_strncmp(next, "ra", 3)))
-		return (ft_lstnew(ft_strdup("rr")));
+		return (ft_lstnew(instrs[5]));
 	if ((!ft_strncmp(curr, "rra", 4) && !ft_strncmp(next, "rrb", 4))
 		|| (!ft_strncmp(curr, "rrb", 4) && !ft_strncmp(next, "rra", 4)))
-		return (ft_lstnew(ft_strdup("rrr")));
+		return (ft_lstnew(instrs[8]));
 	return (0);
 }
 

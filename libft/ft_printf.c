@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_fd.c                                     :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: njackson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:50:13 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/01 14:34:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:26:47 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ int	ft_printf_format(const char *format, va_list data, size_t *i, int fd)
 	return (out);
 }
 
-int	ft_printf_fd(int fd, const char *format, ...)
+int	ft_printf_args(int fd, const char *format, va_list args)
 {
 	size_t	i;
 	ssize_t	fwrote;
 	size_t	out;
-	va_list	args;
 
-	va_start(args, format);
 	i = 0;
 	out = 0;
 	while (format[i])
@@ -67,4 +65,20 @@ int	ft_printf_fd(int fd, const char *format, ...)
 		}
 	}
 	return (out);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	args;
+
+	va_start(args, format);
+	return (ft_printf_args(1, format, args));
+}
+
+int	ft_printf_fd(int fd, const char *format, ...)
+{
+	va_list	args;
+
+	va_start(args, format);
+	return (ft_printf_args(fd, format, args));
 }

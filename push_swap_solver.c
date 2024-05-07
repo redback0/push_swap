@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:42:30 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/22 17:45:21 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:42:25 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char *argv[])
 		return (ps_solver_error(arr));
 	arr = index_arr(arr, argc - 1);
 	stack_a = init_stack_a(arr, argc - 1);
+	free(arr);
 	instr = distance_sort(stack_a);
 	if (ft_lstsize(instr) > 2)
 		cutdown_instr(&instr);
@@ -62,25 +63,6 @@ int	*index_arr(int *arr, int size)
 	return (arr);
 }
 
-int	check_dups(int *arr, int size)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < size)
-	{
-		j = i;
-		while (j-- > 0)
-		{
-			if (arr[i] == arr[j])
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 t_list	*init_stack_a(int *arr, int size)
 {
 	t_list	*stack;
@@ -107,11 +89,23 @@ t_list	*init_stack_a(int *arr, int size)
 	return (stack);
 }
 
+static void	del(void *ptr)
+{
+	(void)ptr;
+}
+
 void	output_instr(t_list *instr)
 {
+	char	**instrs;
+	t_list	*lst;
+
+	lst = instr;
 	while (instr)
 	{
 		ft_printf_fd(1, "%s\n", instr->content);
 		instr = instr->next;
 	}
+	instrs = get_instr_arr();
+	ft_split_free(instrs, *free);
+	ft_lstclear(&lst, *del);
 }

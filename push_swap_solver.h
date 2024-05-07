@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:28:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/22 17:46:44 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:06:11 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		ps_solver_error(int *arr);
 
 // distance sort funcs
 t_list	*distance_sort(t_list *s_a);
+
+char	**get_instr_arr(void);
 
 void	record_instr(char *instr, t_list **s_a,
 			t_list **s_b, t_list **instr_lst);

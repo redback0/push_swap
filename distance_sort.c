@@ -6,28 +6,32 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/04/29 12:28:10 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:11:14 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_solver.h"
 
-static char	**get_instr_arr(void)
+char	**get_instr_arr(void)
 {
-	char	**out;
+	static char	**out = 0;
 
-	out = (char **)malloc(11 * sizeof(char *));
-	out[0] = ft_strdup("sa");
-	out[1] = ft_strdup("sb");
-	out[2] = ft_strdup("ss");
-	out[3] = ft_strdup("ra");
-	out[4] = ft_strdup("rb");
-	out[5] = ft_strdup("rr");
-	out[6] = ft_strdup("rra");
-	out[7] = ft_strdup("rrb");
-	out[8] = ft_strdup("rrr");
-	out[9] = ft_strdup("pb");
-	out[10] = ft_strdup("pa");
+	if (!out)
+	{
+		out = (char **)malloc(12 * sizeof(char *));
+		out[0] = ft_strdup("sa");
+		out[1] = ft_strdup("sb");
+		out[2] = ft_strdup("ss");
+		out[3] = ft_strdup("ra");
+		out[4] = ft_strdup("rb");
+		out[5] = ft_strdup("rr");
+		out[6] = ft_strdup("rra");
+		out[7] = ft_strdup("rrb");
+		out[8] = ft_strdup("rrr");
+		out[9] = ft_strdup("pb");
+		out[10] = ft_strdup("pa");
+		out[11] = 0;
+	}
 	return (out);
 }
 
@@ -105,7 +109,8 @@ t_list	*distance_sort(t_list *s_a)
 	initial_sort(&s_a, &s_b, &instr_lst, instrs);
 	sort_three(&s_a, &s_b, &instr_lst, instrs);
 	return_sort(&s_a, &s_b, &instr_lst, instrs);
-	free(instrs);
+	ft_lstclear(&s_a, *free);
+	ft_lstclear(&s_b, *free);
 	return (instr_lst);
 }
 //	/*DEBUG*/ft_printf_fd(2, "SWAPPED AT: %d\n", ft_lstsize(instr_lst));

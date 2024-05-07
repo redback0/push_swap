@@ -1,7 +1,11 @@
 NAME = push_swap
-BONUS = checker
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+BONUS = checker CC = cc
+
+ifeq ($(DEBUG), 1)
+	CFLAGS = -Wall -Wextra -Werror -g
+else
+	CFLAGS = -Wall -Wextra -Werror
+endif
 
 PS_LIB = push_swap.a
 
@@ -27,41 +31,61 @@ OBJ = $(SRC:.c=.o)
 PS_LIB_OBJ = $(PS_LIB_SRC:.c=.o)
 B_OBJ = $(B_SRC:.c=.o)
 
+
+#LOGGING DEFINES
+LOGLEVEL ?= 4
+LOGERROR ?= 4
+export LOGLEVEL
+export LOGERROR
+
+DEFINES = -DLOGLEVEL=$(LOGLEVEL) -DLOGERROR=$(LOGERROR)
+
+
+#PREFIX/COLOUR VARIABLES
+C_GRAY = \033[1;30m
+C_ORANGE = \033[0;33m
+C_RED = \033[0;31m
+C_CYAN = \033[0;36m
+NC = \033[0m
+
+PREFIX = $(C_ORANGE)<$(NAME)>$(NC)
+
 all: $(NAME)
 
 bonus: $(BONUS)
 
 $(NAME): $(PS_LIB) $(LIBFT) $(OBJ)
-	@echo "<$(NAME)>CREATING push_swap"
+	@printf "$(PREFIX) CREATING $(C_CYAN)$@$(NC)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PS_LIB) $(LIBFT)
 
 %.o: %.c
-	@echo "<$(NAME)>COMPILING $@"
+	@printf "$(PREFIX) $(C_GRAY)COMPILING $@$(NC)\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(PS_LIB): $(LIBFT) $(PS_LIB_OBJ)
-	@echo "<$(NAME)>CREATING push_swap.a"
+	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
 	@ar rcs $(PS_LIB) $(PS_LIB_OBJ)
 
 $(LIBFT): $(LIBFT_HEADER)
-	@echo "<$(NAME)>GETTING LIBFT"
+	@printf "$(PREFIX) MAKING $(C_CYAN)$@$(NC) ARCHIVE\n"
 	@make -C libft
-	@cp libft/$(LIBFT) .
+	@cp libft/$@ .
 
 $(LIBFT_HEADER):
+	@printf "$(PREFIX) $(C_GRAY)GETTING LIBFT HEADER$(NC)\n"
 	@cp libft/$(LIBFT_HEADER) .
 
 $(BONUS): $(PS_LIB) $(LIBFT) $(B_OBJ)
-	@echo "<$(NAME)>CREATING $(BONUS)"
+	@printf "$(PREFIX) CREATING $(C_CYAN)$@$(NC)\n"
 	@$(CC) $(CFLAGS) -o $(BONUS) $(B_OBJ) $(PS_LIB) $(LIBFT)
 
 clean:
-	@echo "<$(NAME)>REMOVING ALL OBJ"
+	@printf "$(PREFIX) $(C_RED)REMOVING OBJECT FILES$(NC)\n"
 	@make fclean -C libft
 	@rm -f $(OBJ) $(PS_LIB_OBJ) $(B_OBJ)
 
 fclean: clean
-	@echo "<$(NAME)>REMOVING LIBS/EXEC"
+	@printf "$(PREFIX) $(C_RED)REMOVING ARCHIVE$(NC)\n"
 	@rm -f $(NAME) $(BONUS) $(PS_LIB) $(LIBFT) $(LIBFT_HEADER)
 
 re: fclean all

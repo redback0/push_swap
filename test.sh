@@ -33,8 +33,17 @@ if [ -z $size ]; then
 	exit 1
 fi
 
+printf "Norm: "
+norm="$(norminette)"
+if [ $? -eq 1 ]; then
+	printf "${RED}KO${NC}\n"
+	printf "${norm}\n\n"
+else
+	printf "${GREEN}OK${NC}\n\n"
+fi
+
 if [ -z ${seeds[0]} ]; then
-	echo "Getting seeds..."
+	printf "${YELLOW}Getting seeds...${NC}\n"
 	seeds=($(awk -v loop=$runs -v range=$((2147483647)) 'BEGIN{
 		srand()
 		do {
