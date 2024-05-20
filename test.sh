@@ -42,8 +42,18 @@ else
 	printf "${GREEN}OK${NC}\n\n"
 fi
 
+if [ ! -f "push_swap" ]; then
+	printf "${YELLOW}NO EXECUTABLE -- ATTEMPTING TO MAKE${NC}\n\n"
+	make
+	if [ ! -f "push_swap" ]; then
+		printf "${RED}MAKE FAILED${NC}\n"
+		exit 1
+	fi
+	printf "${YELLOW}SUCCESSFULLY RAN MAKE\n\n"
+fi
+
 if [ -z ${seeds[0]} ]; then
-	printf "${YELLOW}Getting seeds...${NC}\n"
+	printf "${YELLOW}Getting seeds...${NC}"
 	seeds=($(awk -v loop=$runs -v range=$((2147483647)) 'BEGIN{
 		srand()
 		do {
@@ -55,6 +65,7 @@ if [ -z ${seeds[0]} ]; then
 			}
 		} while (count<loop)
 		}'))
+	printf " Done\n"
 fi
 
 sum=0
