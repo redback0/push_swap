@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:06:01 by njackson          #+#    #+#             */
-/*   Updated: 2024/05/07 15:11:14 by njackson         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:36:23 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,11 @@ t_list	*distance_sort(t_list *s_a)
 	char	**instrs;
 	t_list	*instr_lst;
 
+	if (stack_in_order(s_a))
+	{
+		ft_lstclear(&s_a, *free);
+		return (0);
+	}
 	s_b = 0;
 	instr_lst = 0;
 	instrs = get_instr_arr();

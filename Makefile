@@ -1,5 +1,6 @@
 NAME = push_swap
-BONUS = checker CC = cc
+BONUS = checker
+CC = cc
 
 ifeq ($(DEBUG), 1)
 	CFLAGS = -Wall -Wextra -Werror -g
