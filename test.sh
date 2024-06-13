@@ -96,18 +96,19 @@ check_solution()
 			max=${wcs[$i]}
 			maxseed=${seeds[$i]}
 		fi
-		if [ $silent == 0 ]; then
+		if [[ $silent == 0 ]]; then
 			echo -n "TOTAL INSTRUCTIONS: "
 			echo ${wcs[$i]}
 		fi
-		if test -f "checker"; then
+		if [ -f "checker" ]; then
 			result=$(echo "$1" | ./checker $2)
 		elif [[ "$OSTYPE" == "darwin"* ]]; then
 			result=$(echo "$1" | ./checker_Mac $2)
 		elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 			result=$(echo "$1" | ./checker_linux $2)
 		fi
-		if [ $silent == 0 ]; then
+		solved=1
+		if [[ $silent == 0 ]]; then
 			echo -n "RESULT: "
 			if [[ "$result" == "OK" ]]; then
 				printf "${GREEN}${result}${NC}\n"
@@ -116,8 +117,9 @@ check_solution()
 				fails=$(( $fails + 1 ))
 				exit 1
 			fi
-		elif [[ "$result" == "KO" ]]; then
+		elif [[ "$result" -ne "OK" ]]; then
 			printf " ${RED}${result}${NC}"
+			solved=0
 			if [ ! -z $3 ]; then
 				printf "SEED: $3\n"
 			fi
@@ -129,7 +131,7 @@ check_solution()
 check_stack()
 {
 	# run push_swap and check return value
-	instrs=$(./push_swap ${stack[@]})
+	instrs=$(./push_swap $1)
 	exitStatus=$?
 	if [[ $exitStatus -eq 139 ]]; then
 		printf "${RED}SEG FAULT :(${NC}\n"
@@ -138,9 +140,11 @@ check_stack()
 		printf "${RED}non-zero exit status${NC}\n"
 	fi
 	#write instructions to instrs.txt if -i specified
-	if [ $pinstr == 1 ]; then
+	if [[ $pinstr -eq 1 ]]; then
 		echo "$instrs" > instrs.txt
 	fi
+
+	check_solution "$instrs" "${stack[@]}" ${seeds[$i]}
 }
 
 do_runs()
@@ -149,7 +153,7 @@ do_runs()
 
 		stack="$( get_stack $size ${seeds[$i]} )"
 
-		if [ $silent == 0 ]; then
+		if [[ $silent -eq 0 ]]; then
 			printf "${YELLOW}----------RUN----------: $((i+1))${NC}\n"
 			printf "SEED: ${seeds[$i]}\n"
 		else
@@ -159,10 +163,10 @@ do_runs()
 			printf "$((i+1))"
 		fi
 
-		check_stack
+		check_stack "${stack[@]}"
+
 	done
 
-	check_solution "$instrs" "${stack[@]}" ${seeds[$i]}
 }
 
 single_size()
@@ -203,19 +207,13 @@ single_size()
 	max=0
 	maxseed=
 	min=-1
-	fails=0
-	
+
 	do_runs
 
 	printf "\n\n${YELLOW}----FINAL RESULTS----${NC}\n"
 	echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
 	echo "MIN INSTRUCTIONS: $min"
 	echo "MAX INSTRUCTIONS: $max (seed: $maxseed)"
-	if [[ $fails -gt 0 ]]; then
-		printf "\nLeft ${RED}${fails}${NC}/${runs} stacks unsorted :(\n\n"
-	else
-		printf "\n${GREEN}All stacks sorted! :D${NC}\n\n"
-	fi
 }
 
 check_error()
@@ -233,6 +231,71 @@ check_error()
 	sleep 0.05
 }
 
+no_return()
+{
+	result=$(./push_swap $1)
+	exit_status="$?"
+	if [[ ${exit_status} -gt 1 ]]; then
+		printf "[${RED}CRASH${NC}]\n"
+		exit 1
+	elif [[ -z ${result} ]]; then
+		printf "[${GREEN}OK${NC}] "
+	else
+		printf "[${RED}KO${NC}] "
+	fi
+	sleep 0.05
+}
+
+small_stack()
+{
+	check_stack "$1"
+	if [[ $solved -gt 0 ]]; then
+		printf "[${GREEN}OK${NC}] "
+	fi
+	sleep 0.01
+}
+
+all_stacks()
+{
+	local prefix=$1
+	local remaining=$2
+	local length=${#remaining}
+	local i
+
+	if [[ $length == 0 ]]; then
+		if [[ "${prefix}" != "$3" ]]; then
+			small_stack "$prefix"
+		fi
+	else
+		for (( i = 0 ; i < $length ; i++ )); do
+			all_stacks "${prefix}${remaining:i:1} " \
+				"${remaining:0:i}${remaining:i+1}" "$3"
+		done
+	fi
+}
+
+get_score()
+{
+	# $1 : instructions number
+	local range=$2
+	local change=$3
+
+	if [[ $1 -lt $range ]]; then
+		score=5
+	elif (( $1 < ( $range + $change ) )); then
+		score=4
+	elif (( $1 < ( $range + $change * 2 ) )); then
+		score=3
+	elif (( $1 < ( $range + $change * 3 ) )); then
+		score=2
+	elif (( $1 < ( $range + $change * 4 ) )); then
+		score=1
+	else
+		score=0
+	fi
+	printf "Eval score for middle version: ${score}/5\n"
+}
+
 # check for executable
 if [ ! -f "push_swap" ]; then
 	printf "${YELLOW}NO EXECUTABLE -- ATTEMPTING TO MAKE${NC}\n\n"
@@ -243,6 +306,8 @@ if [ ! -f "push_swap" ]; then
 	fi
 	printf "${YELLOW}SUCCESSFULLY RAN MAKE\n\n"
 fi
+
+fails=0
 
 if [ -z $1 ]; then
 	check_norm
@@ -259,34 +324,58 @@ if [ -z $1 ]; then
 	check_error -3000000000
 	check_error -21474836480
 
+	printf "\n\nSolved lists: "
+	no_return "0 1 2"
+	no_return "-100 0 100 200"
+	no_return "23 42 75 5092 12345 654321"
+	no_return "$(seq -1000 10 1000)"
+
 	sleep 0.2
 
 # STACK OF 3
 	printf "\n\nstack of 3: "
-	0 1 2
-	0 2 1
-	1 0 2
-	1 2 0
-	2 1 0
-	2 0 1
+
+	all_stacks "" "012" "0 1 2 "
 
 	sleep 0.2
 
 # STACK OF 5
 	printf "\n\nstack of 5: "
 
+	all_stacks "" "01234" "0 1 2 3 4 "
+
 	sleep 0.2
 
 # STACK OF 100
 	printf "\n\n\nstack of 100 (target: 700) 100 runs:\n\n"
-	single_size 100 -vr 100
+
+	single_size 100 -r 100
+
+	printf "\n\n\n"
+	get_score "${max}" 700 200
 
 	sleep 0.5
 
 # STACK OF 500
 	printf "\n\nstack of 500 (target: 5500) 100 runs:\n\n"
-	single_size 500 -vr 100
+
+	single_size 500 -r 100
+
+	printf "\n\n\n"
+	get_score "${max}" 5500 1500
+
+	if [[ $fails -gt 0 ]]; then
+		printf "\nLeft ${RED}${fails}${NC}/${runs} stacks unsorted :(\n\n"
+	else
+		printf "\n${GREEN}All stacks sorted! :D${NC}\n\n"
+	fi
 
 else
 	single_size $@
+
+	if [[ $fails -gt 0 ]]; then
+		printf "\nLeft ${RED}${fails}${NC}/${runs} stacks unsorted :(\n\n"
+	else
+		printf "\n${GREEN}All stacks sorted! :D${NC}\n\n"
+	fi
 fi
