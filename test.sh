@@ -85,7 +85,17 @@ check_solution()
 	# check if sorted correctly
 	if [[ $1 == "" ]]; then
 		# I should add a check here for if the stack isn't sorted
-		echo "SOLVED LIST"
+		local arr=($2)
+		for (( i = 0 ; i < ${#arr[@]} - 1 ; i++ )); do
+			if [[ ${arr[$i]} -gt ${arr[$(( i + 1 ))]} ]]; then
+				printf "${RED}KO${NC}\n"
+				fails=$(( $fails + 1 ))
+				return
+			fi
+		done
+		if [[ $silent == 0 ]]; then
+			printf "${GREEN}KO${NC}\n"
+		fi
 	else
 		wcs[$i]=$(echo "$1" | wc -l | tr -d ' ')
 		sum=$(( $sum + ${wcs[$i]} ))
@@ -210,7 +220,7 @@ single_size()
 
 	do_runs
 
-	printf "\n\n${YELLOW}----FINAL RESULTS----${NC}\n"
+	printf "\n\n${YELLOW}----RESULTS----${NC}\n"
 	echo "AVERAGE INSTRUCTIONS: $((sum / runs))"
 	echo "MIN INSTRUCTIONS: $min"
 	echo "MAX INSTRUCTIONS: $max (seed: $maxseed)"
@@ -218,7 +228,7 @@ single_size()
 
 check_error()
 {
-	result=$(./push_swap $1)
+	result=$(./push_swap $1 2>&1)
 	exit_status="$?"
 	if [[ ${exit_status} -gt 1 ]]; then
 		printf "[${RED}CRASH${NC}]\n"
@@ -228,7 +238,6 @@ check_error()
 	else
 		printf "[${GREEN}OK${NC}] "
 	fi
-	sleep 0.05
 }
 
 no_return()
@@ -243,16 +252,19 @@ no_return()
 	else
 		printf "[${RED}KO${NC}] "
 	fi
-	sleep 0.05
 }
 
 small_stack()
 {
 	check_stack "$1"
+	num_instr=$(echo "$instrs" | wc -l | tr -d ' ')
 	if [[ $solved -gt 0 ]]; then
-		printf "[${GREEN}OK${NC}] "
+		if [[ ! $num_instr -gt $2 ]]; then
+			printf "[${GREEN}OK${NC}] "
+		else
+			printf "[${RED}KO ${NC}(to many instructions)] "
+		fi
 	fi
-	sleep 0.01
 }
 
 all_stacks()
@@ -264,12 +276,12 @@ all_stacks()
 
 	if [[ $length == 0 ]]; then
 		if [[ "${prefix}" != "$3" ]]; then
-			small_stack "$prefix"
+			small_stack "$prefix" $4
 		fi
 	else
 		for (( i = 0 ; i < $length ; i++ )); do
 			all_stacks "${prefix}${remaining:i:1} " \
-				"${remaining:0:i}${remaining:i+1}" "$3"
+				"${remaining:0:i}${remaining:i+1}" "$3" $4
 		done
 	fi
 }
@@ -293,7 +305,7 @@ get_score()
 	else
 		score=0
 	fi
-	printf "Eval score for middle version: ${score}/5\n"
+	printf "Eval score for $4 version: ${score}/5\n"
 }
 
 # check for executable
@@ -323,6 +335,8 @@ if [ -z $1 ]; then
 	check_error -2147483649
 	check_error -3000000000
 	check_error -21474836480
+	check_error "4 8 1 5 8"
+	check_error "1 2 3 4 5 3 6 7 8"
 
 	printf "\n\nSolved lists: "
 	no_return "0 1 2"
@@ -330,21 +344,15 @@ if [ -z $1 ]; then
 	no_return "23 42 75 5092 12345 654321"
 	no_return "$(seq -1000 10 1000)"
 
-	sleep 0.2
-
 # STACK OF 3
 	printf "\n\nstack of 3: "
 
-	all_stacks "" "012" "0 1 2 "
-
-	sleep 0.2
+	all_stacks "" "012" "0 1 2 " 3
 
 # STACK OF 5
 	printf "\n\nstack of 5: "
 
-	all_stacks "" "01234" "0 1 2 3 4 "
-
-	sleep 0.2
+	all_stacks "" "01234" "0 1 2 3 4 " 12
 
 # STACK OF 100
 	printf "\n\n\nstack of 100 (target: 700) 100 runs:\n\n"
@@ -352,9 +360,7 @@ if [ -z $1 ]; then
 	single_size 100 -r 100
 
 	printf "\n\n\n"
-	get_score "${max}" 700 200
-
-	sleep 0.5
+	get_score "${max}" 700 200 "middle"
 
 # STACK OF 500
 	printf "\n\nstack of 500 (target: 5500) 100 runs:\n\n"
@@ -362,7 +368,7 @@ if [ -z $1 ]; then
 	single_size 500 -r 100
 
 	printf "\n\n\n"
-	get_score "${max}" 5500 1500
+	get_score "${max}" 5500 1500 "advanced"
 
 	if [[ $fails -gt 0 ]]; then
 		printf "\nLeft ${RED}${fails}${NC}/${runs} stacks unsorted :(\n\n"
